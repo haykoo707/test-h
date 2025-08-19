@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://adsgram.io/static/adsgram.min.js"></script>
-
-
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -1377,6 +1375,12 @@ function updateScore() {
           const tab = button.getAttribute('data-tab');
           button.classList.add('active');
           document.getElementById(tab).classList.add('active');
+
+          // Load profile info lazily on tab click
+          if (tab === 'profile') {
+            try {
+} catch (e) { console.error('renderProfile failed:', e); }
+          }
         });
       });
     }
@@ -1406,22 +1410,33 @@ function updateScore() {
 
     function renderProfile() {
   const profileInfo = document.getElementById('profileInfo');
+  const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
 
- 
+  if (!user) {
+    profileInfo.innerHTML = `
+      <p style="color:white; text-align:center;">
+        ❌ User info not available. Please open from Telegram.
+      </p>`;
+    return;
+  }
 
-    
+  const displayName = user.username 
+    ? '@' + user.username 
+    : (user.first_name + ' ' + (user.last_name || ''));
 
-   profileInfo.innerHTML = `
+  const photoUrl = user.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
+  profileInfo.innerHTML = `
   <h2 style="color: #fff; margin-bottom: 12px;"></h2>
   <div class="profile-item">
       <img 
-      src="${Telegram.WebApp.initDataUnsafe.user.photo_url}" 
+      src="${photoUrl}" 
       class="profile-photo"
       alt="Profile photo"
     >
     <div class="profile-info">
       <span class="username">
-        @${Telegram.WebApp.initDataUnsafe.user.username}
+        ${displayName}
       </span>
      <span class="total-score">
   Total ${userProfile.score} <i class="fas fa-star"></i>
@@ -1519,7 +1534,7 @@ function handleDeleteConfirm() {
       setupTabs();
       setupCloseButton();
       renderTasks();
-      renderProfile(); // Փոխված է renderFriends()-ից
+// Փոխված է renderFriends()-ից
       updateScore();
     }
     
@@ -1594,8 +1609,7 @@ function handleDeleteConfirm() {
       setupCloseButton();
       renderTasks();
       renderDailyReward(); // Փոխված է
-      renderProfile();
-      updateScore();
+updateScore();
     }
 // ⏱️ Պահել որ օրը վերցվել է reward-ը
 let claimDays = JSON.parse(localStorage.getItem("dailyClaimDays") || "[]");
