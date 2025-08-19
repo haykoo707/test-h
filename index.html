@@ -12,6 +12,31 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://adsgram.io/static/adsgram.min.js"></script>
 <script>
+const adsgram = new Adsgram({
+    blockId: '13855'
+});
+
+// Օրինակ՝ Watch Ad task-ի կոճակ սեղմելիս
+function watchAdAndReward(taskId) {
+    adsgram.show().then(() => {
+        // Գովազդը դիտվեց մինչև վերջ
+        const task = tasks.find(t => t.id === taskId);
+        if (task) {
+            task.status = 'claimed';
+            userScore += task.reward;
+            permanentlyClaim(taskId);
+            saveState();
+            updateScore();
+            renderTasks();
+            alert(`+${task.reward} points earned!`);
+        }
+    }).catch(err => {
+        console.log("Ad not completed", err);
+    });
+}
+</script>
+
+<script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -19,7 +44,7 @@
   gtag('config', 'G-3QW0MCBKEC');
 </script>
 
-<title>Hhayinvest</title>
+<title>HyperVerse</title>
 
 <script>
   const tg = window.Telegram.WebApp;
@@ -44,7 +69,7 @@
 .popup-content {
   background: #111;
   color: white;
-  border: 1px solid #8A2BE2;
+  border: 1px solid #00f0ff;
   border-radius: 10px;
   padding: 20px;
   width: 90%;
@@ -77,13 +102,16 @@
 </head>
 <body>
 </script>
+<canvas id="starCanvas"></canvas>
   <div class="app-container">
     <!-- Վերևի տող -->
     <div class="top-bar">
       <div class="social-icons">
         <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Menu">
           <i class="fas fa-bars"></i></button>
-        
+         <button id="inviteButton1" class="invite-button1">
+            <i class="fas fa-user-friends"></i></button>
+
 <!-- Welcome Bonus Popup -->
 <div id="welcomePopup" class="popupbonus">
   <div class="popup-content">
@@ -135,7 +163,7 @@ window.addEventListener("load", () => {
     <p style=" margin-bottom: 15px;">Share your referral link so we can become famous<i class="fas fa-heart heartbeat" style="color: #00d0ff; font-size: 17px;"></i>
     </p>
     <div class="referral-section">
-      <input type="text" id="referralLink" value="################################################" readonly />
+      <input type="text" id="referralLink" value="https://t.me/hyperrverse_bot" readonly />
       <button id="copyButton" class="copy-button"><i class="fas fa-copy"></i></button>
     </div>
 
@@ -197,7 +225,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Menu items
   const items = [
-    { text: 'Website', href: '#########################################' },
+    { text: 'Website', href: 'https://hyper070.github.io/HYPERVERSEweb/' },
     { text: 'History', href: '#' }, // Changed to # for JS handling
 
 
@@ -265,16 +293,19 @@ window.addEventListener('DOMContentLoaded', () => {
       </div>
     </div>
     <!-- Tabs բաժին -->
-     <div class="tabs">
-        <button class="tab-button active" data-tab="play">
-            <i class="fas fa-home"></i>
-        </button>
-        <button class="tab-button" data-tab="home">
-            <i class="fas fa-tasks"></i>
-        </button>
-        <button class="tab-button" data-tab="profile">
-            <i class="fas fa-user"></i>
-        </button>
+    <div class="tabs">
+    </button>
+    <button class="tab-button active" data-tab="play">
+<img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-51-07-122.jpg" alt="play-xax" class="play-icon">
+</button>
+      <button class="tab-button" data-tab="home">
+        <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-52-07-873.jpg" alt="Tasks" class="tasks-icon">
+        <button class="tab-button" data-tab="daily-reward">
+          <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-51-28-628.jpg" alt="Reward" class="reward-icon">
+
+      <button class="tab-button" data-tab="profile">
+        <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-52-49-352.jpg" alt="Profile" class="profile-icon">
+      </button>
     </div>
     <!-- Բովանդակության կոնտեյներ -->
     <div class="content">
@@ -291,14 +322,76 @@ window.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
+ <!-- Daily Reward Tab (Նոր բաժին) -->
+<div id="daily-reward" class="tab-content">
+  <div class="daily-reward-section">
+      <div class="reward-card">
+        <h2><i class="fas fa-trophy"></i> Daily Reward</h2>
+        <div class="reward-timer" id="rewardTimer">Available now</div>
+        <button class="reward-btn" id="claimRewardBtn" onclick="handleDailyClaim()">
+          Claim 1000 <i class="fas fa-star"></i>
+      </button>
+      </div>
+      <p style="color: #666; text-align: center;">
+          Claim your reward every 24 hours!
+      </p>
+  </div>
 
+  <!-- Daily Quest Section -->
+  <div class="daily-quest-section">
+      <div class="reward-card">
+        <h2><i class="fas fa-scroll"></i> Daily Quest</h2>
+        <input class="" type="text" id="dailyCodeInput" placeholder="Enter today's code" />
+          <button class="reward-btn" id="submitQuestBtn" onclick="handleDailyQuest()">Check</button>
+          <div id="questMessage" style="color: #666; text-align: center; margin-top: 10px;"></div>
+      </div>
+      <p style="color: #666; text-align: center;">
+          Enter the correct code once every 24 hours!
+      </p>
+  </div>
+
+  <div class="mystery-box-section">
+    <button id="mysteryBtn" class="open-btn">
+        <i class="fas fa-box-open fa-2x"></i>
+        <span></span>
+    </button>
+</div>
+
+
+  <!-- Mystery Box Popup -->
+  <div id="mysteryPopup" class="popup">
+      <div class="popup-content">
+          <span class="close">&times;</span>
+          <h2>Mystery Boxes</h2>
+          <div class="boxes">
+            <div class="box gold" data-cost="5000">
+              <i class="fas fa-coins fa-lg" style="color: #464439;"></i>
+              Gold Box<br>
+              <small>-5000 <i class="fas fa-star"></i></small>
+          </div>
+          
+          <div class="box diamond" data-cost="15000">
+              <i class="fas fa-gem fa-lg" style="color: #00d0ff;"></i>
+              Diamond Box<br>
+              <small>-10000 <i class="fas fa-star"></i></small>          
+            </div>         
+           </div>
+      </div>
+  </div>
+</div>
 
     
       <!-- profile Tab -->
       <div id="profile" class="tab-content">
         <div class="profile-section">
           <div class="profile-info" id="profileInfo"></div>
-          
+          <div id="connect" style="
+          margin-top: 20px;  
+        padding: p15x;
+        border-radius: 8px;
+        position: absolute;
+        left: 50%; 
+        transform: translateX(-50%);"></div> 
         </div>
       </div>
 
@@ -306,25 +399,53 @@ window.addEventListener('DOMContentLoaded', () => {
 <div id="play" class="tab-content active">
   <div class="score-container">
 <div class="score-icon">
-  <img src="ChatGPT Image Aug 19, 2025, 04_38_33 PM.png" alt="Paw Icon" class="score-image" />
+  <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20May%2019%2C%202025%2C%2001_35_59%20PM.png" alt="Paw Icon" class="score-image" />
 </div>
     <div class="score-text" id="userScoreDisplay">0</div>
     <div id="medalsContainer" onclick="openRewardPopup()"></div>
       <div class="button-group">
+<button class="custom-btn" onclick="openGamesPopup()">
+  <i class="fas fa-dice" style="color: #ffffffef; font-size: 1.3em;"></i> Test your luck
 
 
+</button>
+
+<button class="custom-btn" onclick="window.location.href='https://t.me/HyperrVersee'">
+  <i class="fab fa-telegram-plane" style="color: #ffffffef; font-size: 1.3em;"></i> Join Telegram Community
+</button>
+<button class="custom-btn" onclick="window.location.href='https://x.com/HyperVerse_TG'">
+  <i class="fa-brands fa-x-twitter" style="color: #ffffffef; font-size: 1.3em;"></i> Join X Community
 </button>
 
 
 
 
-
-
   </div>
 </div>
   </div>
 </div>
+<!-- Popup Container -->
+<div id="casinoPopup" class="popup" style="display:none;">
+  <div class="popup-content">
+    <span class="close" onclick="closeGamesPopup()">&times;</span>
+    <h2 id="gameTitle"class="font-size: 8px;"><i class="fas fa-dice" style="color: #00d0ff; padding-bottom: 10px;padding-right: 5px;"></i>Slots</h2>
 
+    
+
+    <div id="slotsGame" class="game-section">
+      <p><i class="fas fa-star" style="color: #00d0ff;"></i> <span id="currentScoreSlots">0</span></p>
+      <div class="input-group">
+        <i class="fas fa-coins input-icon"></i>
+        <input type="number" id="betAmountSlots" placeholder="Enter your bet" min="1">
+      </div>
+      <button onclick="playSlots()">
+        <i class="fas fa-sync-alt spin-icon"></i> 
+        Spin
+      </button>
+      <p id="resultTextSlots" class="result-text"></p>
+    </div>
+  </div>
+</div>
 
 <script>
 function openGamesPopup() {
@@ -360,7 +481,19 @@ function switchGame(game) {
   }
 }
 
-
+function playSlots() {
+  const bet = parseInt(document.getElementById('betAmountSlots').value);
+  let score = getUserScore();
+  
+  if (isNaN(bet) || bet <= 0 || bet > score) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Invalid Bet',
+      html: `<i class="fas fa-exclamation-triangle"></i> Please enter a valid amount!`,
+      confirmButtonColor: '#FF4444'
+    });
+    return;
+  }
 
 const regularSymbols = [
   '<i class="fas fa-coins" style="color: #FFD700;"></i>', // Ոսկե դեղին - մետաղադրամներ
@@ -395,7 +528,62 @@ const regularSymbols = [
       <div class="result-message">
   `;
 
+  // Jackpot պայմանների ստուգում
+  const isJackpot = symbols.every(s => s === jackpotSymbol);
+  const isThreeSame = symbols[0] === symbols[1] && symbols[1] === symbols[2];
+  const isTwoSame = symbols[0] === symbols[1] || symbols[1] === symbols[2] || symbols[0] === symbols[2];
+
+  if (isJackpot) {
+    const win = bet * 25;
+    score += win;
+    resultHTML += `
+        <div class="jackpot-animation">
+          <i class="fas fa-rocket fa-spin"></i>
+          <h3 style="color: #ff69b4;">MEGA JACKPOT +${win} <i class="fas fa-star"></i>
+</h3>
+        </div>`;
+  } 
+  else if (isThreeSame) {
+    const win = bet * 4;
+    score += win;
+    resultHTML += `
+        <div class="win-animation">
+          <i class="fas fa-trophy bounce"></i>
+          <h3 style="color: #4CAF50;">+${win} <i class="fas fa-star"></i>
+</h3>
+        </div>`;
+  }
+  else if (isTwoSame) {
+    const win = bet * 1.5;
+    score += win;
+    resultHTML += `
+        <div class="win-animation">
+          <h3 style="color: #FFD700;">+${win}  <i class="fas fa-star"></i>
+</h3>
+        </div>`;
+  }
+  else {
+    score -= bet;
+    resultHTML += `
+        <div class="loss-message">
+          <h3 style="color: #FF4444;">-${bet} <i class="fas fa-star"></i>
+</h3>
+        </div>`;
+  }
+
+  resultHTML += `</div></div>`;
   
+  setUserScore(score);
+  document.getElementById('resultTextSlots').innerHTML = resultHTML;
+
+  // Անիմացիա jackpot-ի դեպքում
+  if(isJackpot) {
+    document.querySelector('.jackpot-animation').classList.add('blink');
+    setTimeout(() => {
+      new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3').play();
+    }, 500);
+  }
+}
 </script>
 
 
@@ -461,8 +649,8 @@ document.getElementById("userScoreDisplay").innerHTML = `
 </div>
 
 <div class="loading-screen" id="loadingScreen">
-  <img src="logo_purple_black.jpg" alt="Loading..." class="loading-image animate-loading">
-  <h5 class="loadingh5">test</h5> 
+  <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20May%2019%2C%202025%2C%2001_35_59%20PM.png" alt="Loading..." class="loading-image animate-loading">
+  <h5 class="loadingh5">5.1.x</h5> 
 </div>
 
 
@@ -496,7 +684,32 @@ document.getElementById("userScoreDisplay").innerHTML = `
     checkTelegramContext();
 </script>
 
+  <script>
+    
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://haykoo707.github.io/hypervverse/tonconnect-manifest.json',
+            buttonRootId: 'connect'
+            
+        });
+        async function transaction() {
+        const transaction = {
+            validUntil: Math.round(Date.now() / 1000) + 10,
+            messages: [
+                {
+                    address: "UQBfrU75WGhBLnRpBs1ImWE5sPdxKsFMBgogpD578JxXyDbK",
+                    amount: "1000000" // Example amount in nanoton
+                }
+            ]
+        };
 
+    try {
+        await tonConnectUI.sendTransaction(transaction);
+        console.log("Transaction sent successfully!");
+    } catch (e) {
+        console.error("Failed to send transaction:", e);
+    }
+}
+</script>
   <script>
       setTimeout(() => {
           document.getElementById("loadingScreen").style.opacity = "0";
@@ -518,6 +731,8 @@ const scoreDisplay = document.getElementById('score');
 let bonus = document.createElement('div');
 bonus.id = 'bonus';
 bonus.classList.add('hidden');
+const dailyCode = "1234"; // ✅ Փոխարինիր քո օրվա կոդով
+const questCooldownKey = "dailyQuestCooldown";
 const userScoreKey = "userScore"; // 🔥 Պահում ենք score Local Storage-ում
 
 
@@ -645,7 +860,7 @@ const defaultTasks = [
     id: 1,
     title: 'Join Telegram Channel',
     icon: '<i class="fab fa-telegram-plane" style="color: #ffffffef; font-size: 1.5em;"></i>',
-    link: '',
+    link: 'https://t.me/HyperrVersee',
     reward: 2000,
     status: 'pending',
     claimAvailable: false,
@@ -654,7 +869,7 @@ const defaultTasks = [
 {
     id: 2,
     title: 'Join X Community',
-    link: '',
+    link: 'https://x.com/HyperVerse_TG',
     reward: 2000,
     status: 'pending',
     claimAvailable: false,
@@ -664,7 +879,7 @@ const defaultTasks = [
 {
     id: 4,
     title: 'Follow TikTok',
-    link: '', // Փոխարինիր իրական հղումով
+    link: 'https://www.tiktok.com/@hyper_verse_', // Փոխարինիր իրական հղումով
     reward: 2000,
     status: 'pending',
     claimAvailable: false,
@@ -731,7 +946,16 @@ const defaultTasks = [
     timerId: null,
     icon: '<i class="fas fa-circle-check"  style="color: #ffffffef; font-size: 1.4em;"></i>'
 },
-
+{
+    id: 11,
+    title: 'Watch an Ad',
+    reward: 1000,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fas fa-play-circle" style="color: #ffffffef; font-size: 1.4em;"></i>',
+    type: 'ad'
+}
 
 ];
 function trackLoginDay() {
@@ -1142,7 +1366,7 @@ if (task.type === 'ad' || task.id === 11) {
 
         return;
     }
-     // ✅ Boost Channel task (ID 9)
+    // ✅ Boost Channel task (ID 9)
     if (task.id === 9) {
         const boostLink = 'https://t.me/HyperrVersee?boost'; // Փոխարինիր քո channel boost հղումով
         window.open(boostLink, '_blank');
@@ -1375,12 +1599,6 @@ function updateScore() {
           const tab = button.getAttribute('data-tab');
           button.classList.add('active');
           document.getElementById(tab).classList.add('active');
-
-          // Load profile info lazily on tab click
-          if (tab === 'profile') {
-            try {
-} catch (e) { console.error('renderProfile failed:', e); }
-          }
         });
       });
     }
@@ -1408,42 +1626,31 @@ function updateScore() {
       score: localStorage.getItem("userScore") ? parseInt(localStorage.getItem("userScore")) : 0
     };
 
-// Keep this complete version of renderProfile() function
-function renderProfile() {
+    function renderProfile() {
   const profileInfo = document.getElementById('profileInfo');
-  const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
 
-  if (!user) {
-    profileInfo.innerHTML = `
-      <p style="color:white; text-align:center;">
-        ❌ User info not available. Please open from Telegram.
-      </p>`;
-    return;
-  }
+ 
 
-  const displayName = user.username 
-    ? '@' + user.username 
-    : (user.first_name + ' ' + (user.last_name || ''));
+    
 
-  const photoUrl = user.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-
-  profileInfo.innerHTML = `
+   profileInfo.innerHTML = `
   <h2 style="color: #fff; margin-bottom: 12px;"></h2>
   <div class="profile-item">
       <img 
-      src="${photoUrl}" 
+      src="${Telegram.WebApp.initDataUnsafe.user.photo_url}" 
       class="profile-photo"
       alt="Profile photo"
     >
     <div class="profile-info">
       <span class="username">
-        ${displayName}
+        @${Telegram.WebApp.initDataUnsafe.user.username}
       </span>
      <span class="total-score">
   Total ${userProfile.score} <i class="fas fa-star"></i>
 </span>
     </div>
   </div>
+
 
   <button class="sp-btn" onclick="window.location.href='paymentsup.html'">
     Support the project <i class="fas fa-hand-holding-usd"></i>
@@ -1482,9 +1689,8 @@ function renderProfile() {
     </div>
   </div>
 `;
+
 }
-
-
 function showDeleteModal() {
   document.querySelector('.delete-modal').style.display = 'flex';
 }
@@ -1535,7 +1741,7 @@ function handleDeleteConfirm() {
       setupTabs();
       setupCloseButton();
       renderTasks();
-// Փոխված է renderFriends()-ից
+      renderProfile(); // Փոխված է renderFriends()-ից
       updateScore();
     }
     
@@ -1610,7 +1816,8 @@ function handleDeleteConfirm() {
       setupCloseButton();
       renderTasks();
       renderDailyReward(); // Փոխված է
-updateScore();
+      renderProfile();
+      updateScore();
     }
 // ⏱️ Պահել որ օրը վերցվել է reward-ը
 let claimDays = JSON.parse(localStorage.getItem("dailyClaimDays") || "[]");
