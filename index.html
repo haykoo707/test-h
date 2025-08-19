@@ -1451,39 +1451,31 @@ function updateScore() {
       score: localStorage.getItem("userScore") ? parseInt(localStorage.getItem("userScore")) : 0
     };
 
-    function renderProfile() {
+   function renderProfile() {
   const profileInfo = document.getElementById('profileInfo');
+  if (!profileInfo) return; // եթե profileInfo չկա HTML-ում, ընդհանրապես դուրս գա
 
- 
+  const user = Telegram.WebApp.initDataUnsafe?.user || {};
+  const userProfile = window.userProfile || { score: 0 }; // եթե չունես, գոնե default արժեք ունենա
 
-    
-
-   profileInfo.innerHTML = `
-  <h2 style="color: #fff; margin-bottom: 12px;"></h2>
-  <div class="profile-item">
+  profileInfo.innerHTML = `
+    <h2 style="color: #fff; margin-bottom: 12px;"></h2>
+    <div class="profile-item">
       <img 
-      src="${Telegram.WebApp.initDataUnsafe.user.photo_url}" 
-      class="profile-photo"
-      alt="Profile photo"
-    >
-    <div class="profile-info">
-      <span class="username">
-        @${Telegram.WebApp.initDataUnsafe.user.username}
-      </span>
-     <span class="total-score">
-  Total ${userProfile.score} <i class="fas fa-star"></i>
-</span>
+        src="${user.photo_url || 'default.png'}" 
+        class="profile-photo"
+        alt="Profile photo"
+      >
+      <div class="profile-info">
+        <span class="username">
+          @${user.username || 'NoUsername'}
+        </span>
+        <span class="total-score">
+          Total ${userProfile.score ?? 0} <i class="fas fa-star"></i>
+        </span>
+      </div>
     </div>
-  </div>
-
-  
-
-
-
-
-
-`;
-
+  `;
 }
 
 
