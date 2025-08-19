@@ -1408,10 +1408,13 @@ function updateScore() {
   const profileInfo = document.getElementById('profileInfo');
 
  
-    profileInfo.innerHTML = `
+
+    
+
+   profileInfo.innerHTML = `
   <h2 style="color: #fff; margin-bottom: 12px;"></h2>
   <div class="profile-item">
-    <img 
+      <img 
       src="${Telegram.WebApp.initDataUnsafe.user.photo_url}" 
       class="profile-photo"
       alt="Profile photo"
@@ -1427,16 +1430,11 @@ function updateScore() {
   </div>
 
 
-  
+  <button class="sp-btn" onclick="window.location.href='paymentsup.html'">
+    Support the project <i class="fas fa-hand-holding-usd"></i>
+  </button>  
 
-
-
-
-
-
-
-
-
+ 
 
   <!-- User Stats -->
   <div class="user-stats">
@@ -1450,6 +1448,7 @@ function updateScore() {
     </div>
   </div>
 `;
+
 
 }
 function showDeleteModal() {
