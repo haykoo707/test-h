@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3QW0MCBKEC"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://adsgram.io/static/adsgram.min.js"></script>
+
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3QW0MCBKEC');
+</script>
+
+<title>Hhayinvest</title>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.expand(); // full screen
+</script>
+
+
+<style>
+/* Popup animation */
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.popup-content {
+  background: #111;
+  color: white;
+  border: 1px solid #8A2BE2;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;
+  max-width: 350px;
+  margin: 100px auto;
+  text-align: center;
+  font-family: sans-serif;
+  animation: scaleIn 0.3s ease-in-out forwards;
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+</style>
+
+</head>
+<body>
+</script>
+  <div class="app-container">
+    <!-- Վերևի տող -->
+    <div class="top-bar">
+      <div class="social-icons">
+        <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Menu">
+          <i class="fas fa-bars"></i></button>
+        
+<!-- Welcome Bonus Popup -->
+<div id="welcomePopup" class="popupbonus">
+  <div class="popup-content">
+    <h3>Welcome Bonus</h3>
+    <p>Claim your +500  <i class="fas fa-star"></i>
+ bonus for joining!</p>
+    <button onclick="claimWelcomeBonus()">Claim</button>
+  </div>
+</div>
+<script>
+  // Միավորների թարմացման ֆունկցիա
+function updateScore() {
+  document.getElementById('userScore').textContent = userScore;
+  localStorage.setItem('userScore', userScore);
+  document.getElementById('userScoreDisplay').innerHTML = `${formatScore(userScore)} <i class="fas fa-star"></i>`;
+  updateMedals();
+
+  // ⬇️ Նոր ավելացում
+  sendScoreToServer();
+}
+
+
+function claimWelcomeBonus() {
+  userScore += 500;
+  updateScore();
+  localStorage.setItem("welcomeBonusClaimed", "true");
+
+  const popup = document.getElementById("welcomePopup");
+  popup.querySelector('.popup-content').style.animation = "popupFadeOut 0.4s ease forwards";
+
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 400); // same duration as the animation
+}
+window.addEventListener("load", () => {
+  const claimed = localStorage.getItem("welcomeBonusClaimed");
+  if (!claimed) {
+    document.getElementById("welcomePopup").style.display = "block";
+  }
+});
+
+
+</script>
+
+          <!-- Popup -->
+<div id="popupOverlay1" class="popup-overlay1">
+  <div class="popup-content1">
+    <h2 style=" margin-bottom: 15px; ">Invite your frens!</h2>
+    <p style=" margin-bottom: 15px;">Share your referral link so we can become famous<i class="fas fa-heart heartbeat" style="color: #00d0ff; font-size: 17px;"></i>
+    </p>
+    <div class="referral-section">
+      <input type="text" id="referralLink" value="################################################" readonly />
+      <button id="copyButton" class="copy-button"><i class="fas fa-copy"></i></button>
+    </div>
+
+    <a id="shareTelegram" class="share-telegram" href="#" target="_blank">
+      <i class="fab fa-telegram-plane"></i>
+      Share on Telegram
+    </a>
+    <button id="closePopup1" class="close-button1">Close</button>
+  </div>
+</div>
+
+
+        
+
+<script>
+
+const inviteButton = document.getElementById('inviteButton1');
+const popupOverlay = document.getElementById('popupOverlay1');
+const closePopup = document.getElementById('closePopup1');
+const copyButton = document.getElementById('copyButton');
+const referralLink = document.getElementById('referralLink');
+const shareTelegram = document.getElementById('shareTelegram');
+
+inviteButton.addEventListener('click', () => {
+  popupOverlay.classList.add('active');
+  
+  // Update Telegram share link
+  const link = referralLink.value;
+  const message = encodeURIComponent(`Hey! Join here: ${link}`);
+  shareTelegram.href = `https://t.me/share/url?url=${link}&text=${message}`;
+});
+
+closePopup.addEventListener('click', () => {
+  popupOverlay.classList.remove('active');
+});
+
+copyButton.addEventListener('click', () => {
+  referralLink.select();
+  document.execCommand('copy');
+  copyButton.innerHTML = `
+    <i class="fas fa-copy"></i>
+    
+  `;  setTimeout(() => {
+    copyButton.innerHTML = `
+      <i class="fas fa-copy"></i>
+      
+    `;
+    }, 1500);
+});
+
+// Create the menu on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const topBar = document.querySelector('.top-bar');
+
+  // Create menu container
+  const menu = document.createElement('div');
+  menu.id = 'mobile-menu';
+  menu.className = 'menu-dropdown hidden';
+
+  // Menu items
+  const items = [
+    { text: 'Website', href: '#########################################' },
+    { text: 'History', href: '#' }, // Changed to # for JS handling
+
+
+  ];
+
+  items.forEach(item => {
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.textContent = item.text;
+    
+    // Special handling for History item
+    if (item.text === 'History') {
+      a.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior
+        showHistoryPopup(); // Show history popup
+        toggleMenu(); // Close menu
+      });
+    } else {
+      a.target = '_blank'; // Other links open in new tab
+      a.rel = 'noopener noreferrer'; // Security for external links
+    }
+    
+    menu.appendChild(a);
+  });
+
+  // Append menu to top-bar
+  topBar.appendChild(menu);
+});
+
+        
+          // Toggle menu visibility
+          function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+              menu.classList.toggle('hidden');
+            }
+          }
+        
+          // Optional: Click outside to close
+          document.addEventListener('click', (e) => {
+            const button = document.querySelector('.mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+        
+            if (menu && !button.contains(e.target) && !menu.contains(e.target)) {
+              menu.classList.add('hidden');
+            }
+          });
+          function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  if (menu) {
+    menu.classList.toggle('show');
+    menu.classList.remove('hidden');
+  }
+}
+
+        </script>
+        
+      </div>
+      <div class="title"></div>
+      <i class="fas fa-star"></i>
+      <div class="score">
+        <i class="fas fa-star"></i>
+         <span id="userScore">𝟬
+        </span>
+      </div>
+    </div>
+    <!-- Tabs բաժին -->
+     <div class="tabs">
+        <button class="tab-button active" data-tab="play">
+            <i class="fas fa-home"></i>
+        </button>
+        <button class="tab-button" data-tab="home">
+            <i class="fas fa-tasks"></i>
+        </button>
+        <button class="tab-button" data-tab="profile">
+            <i class="fas fa-user"></i>
+        </button>
+    </div>
+    <!-- Բովանդակության կոնտեյներ -->
+    <div class="content">
+      <!-- Home Tab (Tasks) -->
+      <div id="home" class="tab-content">
+        <div class="task-section">
+          <h2 class="taskstxt">
+            <i class="fas fa-tasks"></i> 
+            Tasks
+          </h2>
+          
+                    <div class="task-list" id="taskList">
+            <!-- Tasks ներմուծվում են JS-ով -->
+          </div>
+        </div>
+      </div>
+
+
+    
+      <!-- profile Tab -->
+      <div id="profile" class="tab-content">
+        <div class="profile-section">
+          <div class="profile-info" id="profileInfo"></div>
+          
+        </div>
+      </div>
+
+<!-- Play Tab -->
+<div id="play" class="tab-content active">
+  <div class="score-container">
+<div class="score-icon">
+  <img src="ChatGPT Image Aug 19, 2025, 04_38_33 PM.png" alt="Paw Icon" class="score-image" />
+</div>
+    <div class="score-text" id="userScoreDisplay">0</div>
+    <div id="medalsContainer" onclick="openRewardPopup()"></div>
+      <div class="button-group">
+
+
+</button>
+
+
+
+
+
+
+  </div>
+</div>
+  </div>
+</div>
+
+
+<script>
+function openGamesPopup() {
+  document.getElementById('casinoPopup').style.display = 'flex';
+  updateScoreDisplay();
+}
+
+function closeGamesPopup() {
+  document.getElementById('casinoPopup').style.display = 'none';
+}
+
+function getUserScore() {
+  return parseInt(localStorage.getItem('userScore') || '0');
+}
+
+function setUserScore(score) {
+  localStorage.setItem('userScore', score);
+  updateScoreDisplay();
+}
+
+function updateScoreDisplay() {
+  const score = getUserScore();
+  document.getElementById('currentScoreSlots').innerText = score;
+}
+
+function switchGame(game) {
+  const slotsGame = document.getElementById('slotsGame');
+  const gameTitle = document.getElementById('gameTitle');
+  
+  if(game === 'slots') {
+    slotsGame.style.display = 'block';
+    gameTitle.innerHTML = '<i class="fas fa-sliders-h" style="color: #00d0ff;"></i> Slot Machine';
+  }
+}
+
+
+
+const regularSymbols = [
+  '<i class="fas fa-coins" style="color: #FFD700;"></i>', // Ոսկե դեղին - մետաղադրամներ
+  '<i class="fas fa-crown" style="color: #FFDF00;"></i>', // Թագի ոսկի
+  '<i class="fas fa-diamond" style="color: #00d0ff;"></i>', // Ադամանդի կապույտ
+  '<i class="fas fa-chess-knight" style="color: #666666;"></i>', // Մետաղական մոխրագույն
+  '<i class="fas fa-bolt" style="color: #00BFFF;"></i>', // Էլեկտրական կապույտ
+  '<i class="fas fa-bomb" style="color: #FF4444;"></i>', // Կարմիր վտանգ
+  '<i class="fas fa-anchor" style="color: #2E5A88;"></i>', // Ծովային նավարի կապույտ
+  '<i class="fas fa-leaf" style="color: #4CAF50;"></i>', // Բնության կանաչ
+  '<i class="fas fa-feather-alt" style="color: #A0522D;"></i>' // Բնական շագանակագույն
+];
+
+
+  const jackpotSymbol = '<i class="fas fa-gem" style="color: #ff69b4;"></i>';
+  
+  // Սիմվոլների գեներացիա 2% հավանականությամբ jackpot-ի համար
+  function getSlotSymbol() {
+    return Math.random() < 0.07 ? jackpotSymbol : 
+           regularSymbols[Math.floor(Math.random() * regularSymbols.length)];
+  }
+
+  const symbols = [getSlotSymbol(), getSlotSymbol(), getSlotSymbol()];
+  
+  let resultHTML = `
+    <div class="slot-result">
+      <div class="slot-wheel">
+        <div class="slot-symbol">${symbols[0]}</div>
+        <div class="slot-symbol">${symbols[1]}</div>
+        <div class="slot-symbol">${symbols[2]}</div>
+      </div>
+      <div class="result-message">
+  `;
+
+  
+</script>
+
+
+<script>
+ function updateMedals() {
+  const medals = [
+    { score: 100, emoji: '<i class="fas fa-medal" style="color: #cd7f32;"></i>', label: 'Bronze Medal' },
+    { score: 10000, emoji: '<i class="fas fa-medal" style="color: #c0c0c0;"></i>', label: 'Silver Medal' },
+    { score: 50000, emoji: '<i class="fas fa-medal" style="color: #ffd700;"></i>', label: 'Gold Medal' },
+    { score: 150000, emoji: '<i class="fas fa-trophy" style="color: #e5e4e2;"></i>', label: 'Platinum Medal' },
+    { score: 500000, emoji: '<i class="fas fa-gem" style="color: #b9f2ff;"></i>', label: 'Diamond Medal' },
+    { score: 1000000, emoji: '<i class="fas fa-trophy" style="color: gold;"></i>', label: 'Millionaire Medal' },
+    { score: 5000000, emoji: '<i class="fas fa-crown" style="color: #ffd700;"></i>', label: 'Legend Medal' },
+    { score: 10000000, emoji: '<i class="fas fa-infinity" style="color: #4b0082;"></i>', label: 'God Mode Medal' }
+  ];
+
+  const current = [...medals].reverse().find(m => userScore >= m.score);
+  const medalsContainer = document.getElementById("medalsContainer");
+
+  medalsContainer.innerHTML = current
+    ? `<div class="medals-container">
+         <div class="medal">
+           <span class="medal-emoji">${current.emoji}</span>
+           <span class="medal-label">${current.label}</span>
+         </div>
+       </div>`
+    : '<p style = "font-size:18px">No title earned yet.</p>';
+}
+
+// Ստացիր userScore localStorage-ից
+const score = parseInt(localStorage.getItem('userScore')) || 0;
+
+// Ձևաչափում
+function formatScore(num) {
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";
+    if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";
+    return num.toString();
+}
+
+
+// Գտիր մեդալը ըստ միավորի (ամենաբարձրին համապատասխանողը)
+const currentMedal = medals.reverse().find(medal => score >= medal.score);
+
+// Թարմացրու ցուցադրումը
+document.getElementById("userScoreDisplay").innerHTML = `
+  ${formatScore(score)} <i class="fas fa-star"></i>
+`;
+
+
+</script>
+
+<!-- History Popup -->
+<div id="historyPopup" class="history-popup">
+  <div class="history-popup-content">
+    <div class="history-header">
+      <h2><i class="fas fa-history"></i> Score History</h2>
+      <button id="closeHistoryBtn" class="close-history-btn"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="historyList" class="history-list">
+      <!-- History items will be populated here -->
+    </div>
+  </div>
+</div>
+
+<div class="loading-screen" id="loadingScreen">
+  <img src="logo_purple_black.jpg" alt="Loading..." class="loading-image animate-loading">
+  <h5 class="loadingh5">test</h5> 
+</div>
+
+
+<!-- Դրա համար տեղադրիր սա քո body-ի վերջում -->
+<div id="notification" class="notification hidden">
+  <span class="check">✔️</span>
+  <span>You got +100<i class="fas fa-star"></i></span>
+</div>
+
+<div id="notification" class="notification hidden"></div>
+<div id="notification" class="notification hidden"></div>
+
+
+
+
+<script>
+    // Ստուգել, արդյոք կայքը բացված է Telegram-ի մեջ
+    function checkTelegramContext() {
+        if (window.Telegram && Telegram.WebApp) {
+            Telegram.WebApp.ready(); // Ակտիվացնել WebApp-ը
+            Telegram.WebApp.expand(); // Ընդլայնել էկրանը
+        } else {
+            // Ոչ Telegram միջավայրում է
+            window.location.href = "https://t.me/hyperrverse_bot"; // Փոխարինել ձեր բոտի հղումով
+            // Կամ ցույց տալ սխալի հաղորդագրություն
+            // document.body.innerHTML = "<h1>Մուտքը միայն Telegram-ի միջոցով</h1>";
+        }
+    }
+
+    // Սկզբնավորել ստուգումը
+    checkTelegramContext();
+</script>
+
+
+  <script>
+      setTimeout(() => {
+          document.getElementById("loadingScreen").style.opacity = "0";
+          setTimeout(() => {
+              document.getElementById("loadingScreen").style.display = "none";
+          }, 3000);
+      }, 1900);
+  </script>
+
+  <script>
+  
+    // Օգտատիրոջ միավորները (հեռելով սկզբնական արժեքը localStorage-ից, եթե կան)
+   
+    const playButton = document.querySelector('.play-btn');
+const closeButton = document.querySelector('.close-btn');
+const ball = document.getElementById('ball');
+const scoreDisplay = document.getElementById('score');
+// Ստեղծում ենք bonus էլեմենտը
+let bonus = document.createElement('div');
+bonus.id = 'bonus';
+bonus.classList.add('hidden');
+const userScoreKey = "userScore"; // 🔥 Պահում ենք score Local Storage-ում
+
+
+
+// Constants
+const TASKS_VERSION = '1.0'; // Add version control for potential future updates
+const HISTORY_KEY = 'scoreHistory'; // Key for storing history in localStorage
+
+// Score history tracking
+
+
+let scoreHistory = [];
+// Սկզբնական tasks-երը
+
+/**
+ * Load score history from localStorage
+ */
+ function loadScoreHistory() {
+  const savedHistory = localStorage.getItem(HISTORY_KEY);
+  if (savedHistory) {
+    try {
+      scoreHistory = JSON.parse(savedHistory);
+    } catch (e) {
+      console.error("Error parsing score history:", e);
+      scoreHistory = [];
+    }
+  }
+}
+
+/**
+ * Save score history to localStorage
+ */
+function saveScoreHistory() {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(scoreHistory));
+}
+
+/**
+ * Add a score change to history
+ * @param {number} amount - The amount to change (positive or negative)
+ * @param {string} description - Description of the change
+ */
+function addToHistory(amount, description) {
+  // Create history entry
+  const entry = {
+    timestamp: Date.now(),
+    amount: amount,
+    description: description
+  };
+  
+  // Add to history array
+  scoreHistory.push(entry);
+  
+  // Keep history at a reasonable size (last 100 entries)
+  if (scoreHistory.length > 100) {
+    scoreHistory = scoreHistory.slice(-100);
+  }
+  
+  // Save to localStorage
+  saveScoreHistory();
+}
+
+/**
+ * Format date for display in history
+ */
+function formatDate(timestamp) {
+  const date = new Date(timestamp);
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+}
+
+/**
+ * Show history popup
+ */
+function showHistoryPopup() {
+  const historyPopup = document.getElementById('historyPopup');
+  const historyList = document.getElementById('historyList');
+  
+  // Clear previous content
+  historyList.innerHTML = '';
+  
+  if (scoreHistory.length === 0) {
+    historyList.innerHTML = '<div class="history-empty">No history available</div>';
+  } else {
+    // Sort history by timestamp (newest first)
+    const sortedHistory = [...scoreHistory].sort((a, b) => b.timestamp - a.timestamp);
+    
+    // Create history items
+    sortedHistory.forEach(entry => {
+      const historyItem = document.createElement('div');
+      historyItem.classList.add('history-item');
+      historyItem.classList.add(entry.amount >= 0 ? 'plus' : 'minus');
+      
+      const amountText = entry.amount >= 0 ? `+${entry.amount}` : `${entry.amount}`;
+      
+      historyItem.innerHTML = `
+        <div>
+          <div class="details">${entry.description}</div>
+          <div class="timestamp">${formatDate(entry.timestamp)}</div>
+        </div>
+        <div class="amount ${entry.amount >= 0 ? 'plus' : 'minus'}">
+          ${amountText} <i class="fas fa-star"></i>
+        </div>
+      `;
+      
+      historyList.appendChild(historyItem);
+    });
+  }
+  
+  // Show popup
+  historyPopup.classList.add('active');
+}
+
+/**
+ * Close history popup
+ */
+function closeHistoryPopup() {
+  const historyPopup = document.getElementById('historyPopup');
+  historyPopup.classList.remove('active');
+}
+
+// Set up close button handler for history popup
+document.getElementById('closeHistoryBtn').addEventListener('click', closeHistoryPopup);
+
+const defaultTasks = [
+{
+    id: 1,
+    title: 'Join Telegram Channel',
+    icon: '<i class="fab fa-telegram-plane" style="color: #ffffffef; font-size: 1.5em;"></i>',
+    link: '',
+    reward: 2000,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null
+},
+{
+    id: 2,
+    title: 'Join X Community',
+    link: '',
+    reward: 2000,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fa-brands fa-x-twitter" style="color: #ffffffef; font-size: 1.4em;"></i>'
+},
+{
+    id: 4,
+    title: 'Follow TikTok',
+    link: '', // Փոխարինիր իրական հղումով
+    reward: 2000,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fab fa-tiktok" style="color: #ffffffef; font-size: 1.4em;"></i>'
+},
+{
+    id: 5,
+    title: 'Verify Telegram Premium',
+    link: '',
+    reward: 5000,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fas fa-crown"  style="color: #ffffffef; font-size: 1.4em;"></i>'
+},
+{
+    id: 6,
+    title: '3-Day Reward Streak',
+    link: '',
+    reward: 3000,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fas fa-gift"  style="color: #ffffffef; font-size: 1.4em;"></i>'
+
+},
+{
+    id: 7,
+    title: '5-Day Reward Streak',
+    link: '',
+    reward: 5000,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fas fa-gift"  style="color: #ffffffef; font-size: 1.4em;"></i>'
+},
+{
+    id: 8,
+    title: '10-Day Reward Streak',
+    link: '',
+    reward: 10000,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fas fa-gift"  style="color: #ffffffef; font-size: 1.4em;"></i>'
+},
+{
+    id: 9,
+    title: 'Boost Our Channel ',
+    link: '',
+    reward: 500,
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fas fa-bolt"  style="color: #ffffffef; font-size: 1.4em;"></i>'
+},
+{
+    id: 10,
+    title: 'User Verification',
+    link: '',
+    status: 'pending',
+    claimAvailable: false,
+    timerId: null,
+    icon: '<i class="fas fa-circle-check"  style="color: #ffffffef; font-size: 1.4em;"></i>'
+},
+
+
+];
+function trackLoginDay() {
+    const today = new Date().toDateString();
+    let loginDays = JSON.parse(localStorage.getItem("loginDays") || "[]");
+
+    // Եթե այսօրվա օրը դեռ չկա՝ ավելացնենք
+    if (!loginDays.includes(today)) {
+        loginDays.push(today);
+        localStorage.setItem("loginDays", JSON.stringify(loginDays));
+    }
+}
+
+// Քանի անգամ խաղը բացեն՝ գրանցի օրը
+trackLoginDay();
+
+// Global variables
+let tasks = [];
+let userScore = 0;
+let taskUpdateListener = null; // Used to detect changes to defaultTasks
+
+/**
+ * Save the current state to localStorage
+ */
+function saveState() {
+    // Save user score
+    localStorage.setItem('userScore', userScore);
+    
+    // Save current tasks state
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    
+    // Save a separate list of permanently claimed task IDs
+    const claimedTaskIds = JSON.parse(localStorage.getItem('claimedTaskIds') || '[]');
+    localStorage.setItem('claimedTaskIds', JSON.stringify(claimedTaskIds));
+    
+    // Save the current version
+    localStorage.setItem('tasksVersion', TASKS_VERSION);
+}
+
+/**
+ * Permanently mark a task as claimed
+ */
+function permanentlyClaim(taskId) {
+    // Get current list of claimed tasks
+    const claimedTaskIds = JSON.parse(localStorage.getItem('claimedTaskIds') || '[]');
+    
+    // Add this task ID if not already in the list
+    if (!claimedTaskIds.includes(taskId)) {
+        claimedTaskIds.push(taskId);
+        localStorage.setItem('claimedTaskIds', JSON.stringify(claimedTaskIds));
+    }
+}
+
+/**
+ * Load the state from localStorage
+ */
+function loadState() {
+    // Get saved data
+    const savedVersion = localStorage.getItem('tasksVersion');
+    const savedScore = localStorage.getItem('userScore');
+    const savedTasks = localStorage.getItem('tasks');
+    const claimedTaskIds = JSON.parse(localStorage.getItem('claimedTaskIds') || '[]');
+    
+    // Restore user score if available
+    if (savedScore !== null) {
+        userScore = parseInt(savedScore, 10);
+    }
+    
+    // Always start with the current defaultTasks (to catch any changes to it)
+    // but filter out the claimed tasks
+    const currentTasks = defaultTasks
+        .filter(task => !claimedTaskIds.includes(task.id))
+        .map(task => ({...task})); // Create copies to avoid modifying defaults
+    
+    // Then, merge any saved task state for tasks that still exist
+    if (savedTasks !== null) {
+        const savedTasksArray = JSON.parse(savedTasks);
+        
+        // For each saved task that still exists in defaultTasks, preserve its state
+        savedTasksArray.forEach(savedTask => {
+            const matchingTaskIndex = currentTasks.findIndex(t => t.id === savedTask.id);
+            if (matchingTaskIndex >= 0 && !claimedTaskIds.includes(savedTask.id)) {
+                // Preserve the state (status, timers, etc.) but keep any updated properties
+                // from the default tasks (like title, icon, etc.)
+                currentTasks[matchingTaskIndex] = {
+                    ...currentTasks[matchingTaskIndex],
+                    status: savedTask.status,
+                    claimAvailable: savedTask.claimAvailable,
+                    timerId: null // Don't restore timers from localStorage
+                };
+            }
+        });
+    }
+    
+    // Use the merged task list
+    tasks = currentTasks;
+    
+    // Reset any tasks that were left in "started" state
+    tasks.forEach(task => {
+        if (task.status === 'started') {
+            task.status = 'pending';
+            task.claimAvailable = false;
+            if (task.timerId) {
+                clearTimeout(task.timerId);
+                task.timerId = null;
+            }
+        }
+    });
+    
+    // Save the initialized state
+    saveState();
+    
+    // Update UI
+    updateScore();
+    renderTasks();
+}
+
+/**
+ * Update the score display
+ */
+function updateScore() {
+    const scoreElement = document.getElementById('userScore');
+    if (scoreElement) {
+        scoreElement.textContent = userScore;
+    
+
+    document.getElementById('userScoreDisplay').innerHTML = `${formatScore(userScore)} <i class="fas fa-star"></i>`;
+
+}
+}
+
+/**
+ * Show a notification
+ */
+function showNotification(message) {
+    const notificationContainer = document.getElementById('notificationContainer');
+    if (!notificationContainer) {
+        // Create notification container if it doesn't exist
+        const container = document.createElement('div');
+        container.id = 'notificationContainer';
+        container.style.position = 'fixed';
+        container.style.top = '20px';
+        container.style.right = '20px';
+        container.style.zIndex = '1000';
+        document.body.appendChild(container);
+    }
+    
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.innerHTML = message;
+    notification.style.backgroundColor = '#4CAF50';
+    notification.style.color = 'white';
+    notification.style.padding = '12px 20px';
+    notification.style.margin = '5px 0';
+    notification.style.borderRadius = '4px';
+    notification.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    notification.style.opacity = '0';
+    notification.style.transition = 'opacity 0.3s';
+    
+    document.getElementById('notificationContainer').appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.style.opacity = '1';
+    }, 10);
+    
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+/**
+ * Render the task list
+ */
+function renderTasks() {
+    const taskList = document.getElementById('taskList');
+    if (!taskList) return;
+    
+    taskList.innerHTML = '';
+    
+    // Only show tasks that aren't claimed
+    tasks.forEach(task => {
+        const taskItem = document.createElement('div');
+        taskItem.classList.add('task-item');
+        
+        // Left part: Icon, Title, Reward
+        const taskLeft = document.createElement('div');
+        taskLeft.classList.add('task-left');
+        
+        const iconDiv = document.createElement('div');
+        iconDiv.classList.add('task-icon');
+        // Հին կոդ
+if (task.icon && task.icon.startsWith('http')) {
+    const img = document.createElement('img');
+    img.src = task.icon;
+    img.style.width = '24px';
+    img.style.height = '24px';
+    iconDiv.appendChild(img);
+} else {
+    iconDiv.innerHTML = task.icon || ''; // Փոխված է textContent → innerHTML
+}
+        
+        const taskInfo = document.createElement('div');
+        taskInfo.classList.add('task-info');
+        
+        const taskTitle = document.createElement('div');
+        taskTitle.classList.add('task-title');
+        taskTitle.textContent = task.title;
+        
+        const taskReward = document.createElement('div');
+        taskReward.classList.add('task-reward');
+        taskReward.innerHTML = `+${task.reward} <i class="fas fa-star"></i>`;
+        
+        taskInfo.appendChild(taskTitle);
+        taskInfo.appendChild(taskReward);
+        taskLeft.appendChild(iconDiv);
+        taskLeft.appendChild(taskInfo);
+        
+        // Right part: Action button
+        const taskRight = document.createElement('div');
+        taskRight.classList.add('task-right');
+        const actionBtn = document.createElement('button');
+        
+        if (task.status === 'pending') {
+            actionBtn.textContent = 'Start';
+            actionBtn.classList.add('start-btn');
+            actionBtn.addEventListener('click', () => handleStart(task.id));
+        } else if (task.status === 'started') {
+            if (!task.claimAvailable) {
+                actionBtn.textContent = 'Wait...';
+                actionBtn.classList.add('waiting-btn');
+                actionBtn.disabled = true;
+            } else {
+                actionBtn.textContent = 'Claim';
+                actionBtn.classList.add('claim-btn');
+                actionBtn.addEventListener('click', () => handleClaim(task.id));
+            }
+        }
+        
+        taskRight.appendChild(actionBtn);
+        taskItem.appendChild(taskLeft);
+        taskItem.appendChild(taskRight);
+        taskList.appendChild(taskItem);
+    });
+    
+    // Show a message if no tasks are available
+    if (tasks.length === 0) {
+        const noTasksMessage = document.createElement('div');
+        noTasksMessage.classList.add('no-tasks-message');
+        noTasksMessage.textContent = 'All tasks completed!';
+        noTasksMessage.style.textAlign = 'center';
+        noTasksMessage.style.padding = '20px';
+        noTasksMessage.style.color = '#666';
+        taskList.appendChild(noTasksMessage);
+    }
+}
+
+/**
+ * Handle the Start button click
+ */
+function handleStart(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+
+// ✅ Adsgram Watch Ad Task
+if (task.type === 'ad' || task.id === 11) {
+    adsgram.show().then(() => {
+        task.status = 'claimed';
+        userScore += task.reward;
+        permanentlyClaim(task.id);
+        updateScore();
+        addToHistory(task.reward, `Watched Ad: ${task.title}`);
+        saveScoreHistory();
+        saveState();
+        renderTasks();
+        showNotification(`+${task.reward} <i class="fas fa-star"></i> earned from ad!`);
+    }).catch(err => {
+        console.log("Ad not completed", err);
+    });
+    return;
+}
+    // ✅ Premium Check Task
+    if (task.id === 5) {
+        const isPremium = Telegram.WebApp.initDataUnsafe?.user?.is_premium;
+        if (isPremium) {
+            task.status = 'started';
+            task.claimAvailable = true;
+            renderTasks();
+            saveState();
+        } else {
+            showNotification("❌ Premium only task. Please upgrade your Telegram account.");
+        }
+        return;
+    }
+
+    // ✅ Daily Reward 3-Day Streak Task
+    if (task.id === 6) {
+        const claimDays = JSON.parse(localStorage.getItem("dailyClaimDays") || "[]");
+
+        // Convert to Date objects
+        const dates = claimDays.map(d => new Date(d));
+
+        if (dates.length < 3) {
+            showNotification("❌ You need 3 daily rewards in a row!");
+            return;
+        }
+
+        // Վերջին 3 օրերը sort-ենք և ստուգենք՝ անընդմեջ են?
+        dates.sort((a, b) => a - b);
+
+        const day1 = dates[0];
+        const day2 = dates[1];
+        const day3 = dates[2];
+
+        function isConsecutive(d1, d2) {
+            return (d2 - d1) / (1000 * 60 * 60 * 24) === 1;
+        }
+
+        if (isConsecutive(day1, day2) && isConsecutive(day2, day3)) {
+            task.status = 'started';
+            task.claimAvailable = true;
+            renderTasks();
+            saveState();
+        } else {
+            showNotification("You need to collect daily rewards 3 days in a row!");
+        }
+
+        return;
+    }
+     // ✅ Daily Reward 5-Day Streak Task
+    if (task.id === 7) {
+        const claimDays = JSON.parse(localStorage.getItem("dailyClaimDays") || "[]");
+
+        // Convert to Date objects
+        const dates = claimDays.map(d => new Date(d));
+
+        if (dates.length < 5) {
+            showNotification("❌ You need 5 daily rewards in a row!");
+            return;
+        }
+
+        // Վերջին 5 օրերը sort-ենք և ստուգենք՝ անընդմեջ են?
+        dates.sort((a, b) => a - b);
+
+        const day1 = dates[0];
+        const day2 = dates[1];
+        const day3 = dates[2];
+        const day4 = dates[3];
+        const day5 = dates[4];
+
+
+
+        function isConsecutive(d1, d2) {
+            return (d2 - d1) / (1000 * 60 * 60 * 24) === 1;
+        }
+
+        if (isConsecutive(day1, day2) && isConsecutive(day2, day3)) {
+            task.status = 'started';
+            task.claimAvailable = true;
+            renderTasks();
+            saveState();
+        } else {
+            showNotification("You need to collect daily rewards 3 days in a row!");
+        }
+
+        return;
+    }
+         // ✅ Daily Reward 10-Day Streak Task
+    if (task.id === 8) {
+        const claimDays = JSON.parse(localStorage.getItem("dailyClaimDays") || "[]");
+
+        // Convert to Date objects
+        const dates = claimDays.map(d => new Date(d));
+
+        if (dates.length < 10) {
+            showNotification("❌ You need 10 daily rewards in a row!");
+            return;
+        }
+
+        // Վերջին 10 օրերը sort-ենք և ստուգենք՝ անընդմեջ են?
+        dates.sort((a, b) => a - b);
+
+        const day1 = dates[0];
+        const day2 = dates[1];
+        const day3 = dates[2];
+        const day4 = dates[3];
+        const day5 = dates[4];
+
+
+
+        function isConsecutive(d1, d2) {
+            return (d2 - d1) / (1000 * 60 * 60 * 24) === 1;
+        }
+
+        if (isConsecutive(day1, day2) && isConsecutive(day2, day3)) {
+            task.status = 'started';
+            task.claimAvailable = true;
+            renderTasks();
+            saveState();
+        } else {
+            showNotification("You need to collect daily rewards 10 days in a row!");
+        }
+
+        return;
+    }
+    // ✅ Boost Channel task (ID 9)
+    if (task.id === 9) {
+        const boostLink = 'https://t.me/HyperrVersee?boost'; // Փոխարինիր քո channel boost հղումով
+        window.open(boostLink, '_blank');
+
+        // Սկսում ենք ժամանակաչափ (օրինակ՝ 20վ), հետո առաջարկում Claim
+        task.status = 'started';
+        task.claimAvailable = false;
+
+        task.timerId = setTimeout(() => {
+            task.claimAvailable = true;
+            renderTasks();
+            saveState();
+        }, 20000); // 20 վայրկյան
+
+        renderTasks();
+        saveState();
+        return;
+    }
+if (task.id === 10) {
+    let loginDays = JSON.parse(localStorage.getItem("loginDays") || "[]");
+
+    // Սորտավորել ըստ օրերի
+    const dates = loginDays.map(d => new Date(d)).sort((a, b) => a - b);
+
+    // Ստուգենք՝ արդյոք կա 90 անընդմեջ օր
+    let streak = 1;
+    for (let i = 1; i < dates.length; i++) {
+        const diff = (dates[i] - dates[i - 1]) / (1000 * 60 * 60 * 24);
+        if (diff === 1) {
+            streak++;
+        } else if (diff > 1) {
+            streak = 1; // խզվել է շարքը
+        }
+    }
+
+    if (streak >= 90) {
+        task.status = 'started';
+        task.claimAvailable = true;
+        renderTasks();
+        saveState();
+    } else {
+        showNotification(`❌ You need ${90 - streak} more day(s) to claim this task`);
+    }
+
+    return;
+}
+
+    // ✅ Մնացած Task-երի համար թող մնա նույնը
+    window.open(task.link, '_blank');
+    task.status = 'started';
+    task.claimAvailable = false;
+
+    // ✅ Սովորական Task-երի համար
+    window.open(task.link, '_blank');
+    task.status = 'started';
+    task.claimAvailable = false;
+
+    task.timerId = setTimeout(() => {
+        task.claimAvailable = true;
+        renderTasks();
+        saveState();
+    }, 20000);
+
+    renderTasks();
+    saveState();
+}
+
+
+/**
+ * Handle the Claim button click
+ */
+function handleClaim(taskId) {
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
+    if (taskIndex === -1) return;
+    
+    const task = tasks[taskIndex];
+    
+    // Add reward to user score
+    userScore += task.reward;
+    updateScore();
+    addToHistory(task.reward, `Claimed task: ${task.title}`);
+    saveScoreHistory();
+    showNotification(`You got +${task.reward} <i class="fas fa-star"></i>`);
+    
+    // Permanently mark this task as claimed
+    permanentlyClaim(task.id);
+    
+    // Clear any timers
+    if (task.timerId) {
+        clearTimeout(task.timerId);
+        task.timerId = null;
+    }
+    
+    // Remove the task from the active tasks list
+    tasks.splice(taskIndex, 1);
+    
+    saveState();
+    renderTasks();
+}
+
+/**
+ * Setup detection for changes to defaultTasks
+ */
+function setupTaskUpdateDetection() {
+    // Save a stringified version of current defaultTasks for comparison
+    taskUpdateListener = JSON.stringify(defaultTasks);
+    
+    // Create a periodic check for changes to defaultTasks
+    setInterval(() => {
+        const currentDefaultTasks = JSON.stringify(defaultTasks);
+        if (currentDefaultTasks !== taskUpdateListener) {
+            // defaultTasks has changed, reload tasks
+            console.log("defaultTasks has been modified, refreshing tasks");
+            taskUpdateListener = currentDefaultTasks;
+            loadState(); // This will merge with any existing task state
+        }
+    }, 1000); // Check every second
+}
+
+/**
+ * Check for new tasks in defaultTasks
+ */
+function checkForNewTasks() {
+    const claimedTaskIds = JSON.parse(localStorage.getItem('claimedTaskIds') || '[]');
+    
+    // Check if there are any new tasks in defaultTasks that aren't in our current tasks
+    const currentTaskIds = tasks.map(task => task.id);
+    const newTasks = defaultTasks.filter(defaultTask => 
+        !currentTaskIds.includes(defaultTask.id) && 
+        !claimedTaskIds.includes(defaultTask.id)
+    );
+    
+    // Also check for updates to existing tasks (title, reward, icon, etc.)
+    let updatedTasksCount = 0;
+    tasks.forEach((task, index) => {
+        const defaultVersion = defaultTasks.find(dt => dt.id === task.id);
+        if (defaultVersion) {
+            // Check if any properties except status, claimAvailable, timerId have changed
+            const taskCopy = {...task};
+            const defaultCopy = {...defaultVersion};
+            
+            // Remove status properties for comparison
+            delete taskCopy.status;
+            delete taskCopy.claimAvailable;
+            delete taskCopy.timerId;
+            delete defaultCopy.status;
+            delete defaultCopy.claimAvailable;
+            delete defaultCopy.timerId;
+            
+            // If the properties are different, update the task
+            if (JSON.stringify(taskCopy) !== JSON.stringify(defaultCopy)) {
+                // Update task properties but preserve status
+                const status = task.status;
+                const claimAvailable = task.claimAvailable;
+                const timerId = task.timerId;
+                
+                // Update with new properties
+                tasks[index] = {...defaultVersion, 
+                    status: status, 
+                    claimAvailable: claimAvailable, 
+                    timerId: timerId
+                };
+                
+                updatedTasksCount++;
+            }
+        }
+    });
+    
+    if (newTasks.length > 0 || updatedTasksCount > 0) {
+        // Add new tasks to the current tasks list
+        newTasks.forEach(newTask => {
+            tasks.push({...newTask}); // Create a copy to avoid modifying defaults
+        });
+        
+        // Save and render
+        saveState();
+        renderTasks();
+        
+        // Show appropriate notification
+        if (newTasks.length > 0) {
+            if (newTasks.length === 1) {
+                showNotification(`New task available: ${newTasks[0].title}`);
+            } else {
+                showNotification(`${newTasks.length} new tasks available!`);
+            }
+        } else if (updatedTasksCount > 0) {
+            showNotification(`${updatedTasksCount} task${updatedTasksCount > 1 ? 's' : ''} updated!`);
+        }
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    loadState();
+    
+    // Check for new tasks periodically (every 5 seconds)
+    setInterval(checkForNewTasks, 5000);
+    
+    // Set up a mutation observer to detect changes to defaultTasks if it's modified directly
+    setupTaskUpdateDetection();
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+    // Միավորների թարմացում
+function updateScore() {
+  document.getElementById('userScore').textContent = userScore;
+  localStorage.setItem('userScore', userScore);
+
+  document.getElementById('userScoreDisplay').innerHTML = `${formatScore(userScore)} <i class="fas fa-star"></i>`;
+  updateMedals(); // ✅ Թարմացնենք մեդալները նույնպես
+}
+
+
+
+    // Tabs փոխման տրամաբանություն
+    function setupTabs() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          tabContents.forEach(tc => tc.classList.remove('active'));
+
+          const tab = button.getAttribute('data-tab');
+          button.classList.add('active');
+          document.getElementById(tab).classList.add('active');
+        });
+      });
+    }
+
+    // «Close» կոճակի գործողությունը (օրինակային)
+    function setupCloseButton() {
+      }
+
+    // Բոլոր բովանդակության սկզբնավորումը
+    function initApp() {
+      loadScoreHistory();
+
+      loadState();
+      setupTabs();
+      setupCloseButton();
+      renderTasks();
+      renderFriends();
+      updateScore();
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+
+     // Օգտատիրոջ պրոֆիլի տվյալներ
+     let userProfile = {
+      score: localStorage.getItem("userScore") ? parseInt(localStorage.getItem("userScore")) : 0
+    };
+
+    function renderProfile() {
+  const profileInfo = document.getElementById('profileInfo');
+
+ 
+    profileInfo.innerHTML = `
+  <h2 style="color: #fff; margin-bottom: 12px;"></h2>
+  <div class="profile-item">
+    <img 
+      src="${Telegram.WebApp.initDataUnsafe.user.photo_url}" 
+      class="profile-photo"
+      alt="Profile photo"
+    >
+    <div class="profile-info">
+      <span class="username">
+        @${Telegram.WebApp.initDataUnsafe.user.username}
+      </span>
+     <span class="total-score">
+  Total ${userProfile.score} <i class="fas fa-star"></i>
+</span>
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <!-- User Stats -->
+  <div class="user-stats">
+    <div class="stat-item">
+      <i class="fas fa-users"></i>
+      <span>Total Users: <strong id="total-users">34</strong></span>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-user-check"></i>
+      <span>Active Users: <strong id="active-users">12</strong></span>
+    </div>
+  </div>
+`;
+
+}
+function showDeleteModal() {
+  document.querySelector('.delete-modal').style.display = 'flex';
+}
+
+function closeDeleteModal() {
+  document.querySelector('.delete-modal').style.display = 'none';
+}
+
+function showDeletePopup(message) {
+  const popup = document.querySelector('.delete-popup');
+  popup.textContent = message;
+  popup.style.display = 'block';
+
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 3000);
+}
+
+function handleDeleteConfirm() {
+  try {
+    localStorage.clear();
+    showDeletePopup('All data has been successfully deleted!');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+    closeDeleteModal();
+  } catch (error) {
+    showDeletePopup('Error deleting data: ' + error.message);
+  }
+}
+
+
+
+
+
+     // Օգտատիրոջ պրոֆիլի տվյալներ
+     let userairdrop = {
+      score: localStorage.getItem("userScore") ? parseInt(localStorage.getItem("userScore")) : 0
+    };
+
+  
+
+    // Ինիցիալիզացիա
+    function initApp() {
+      loadScoreHistory();
+
+      loadState();
+      setupTabs();
+      setupCloseButton();
+      renderTasks();
+      renderProfile(); // Փոխված է renderFriends()-ից
+      updateScore();
+    }
+    
+
+    // Մնացած կոդը մնում է նույնը...
+
+    // Daily Reward համակարգ
+    let lastClaimTime = localStorage.getItem('lastClaimTime') || 0;
+    let rewardInterval;
+
+    // Daily Reward-ի ցուցադրում
+    function renderDailyReward() {
+      const now = Date.now();
+      const timeLeft = 86400000 - (now - lastClaimTime);
+      const claimBtn = document.getElementById('claimRewardBtn');
+      const timerEl = document.getElementById('rewardTimer');
+
+      if (timeLeft > 0) {
+        claimBtn.disabled = true;
+        updateTimerDisplay(timeLeft);
+        startTimer();
+      } else {
+        claimBtn.disabled = false;
+        timerEl.textContent = "available now";
+      }
+    }
+
+    // Թայմերի ցուցադրում
+    function updateTimerDisplay(ms) {
+      const hours = Math.floor(ms / 3600000);
+      const minutes = Math.floor((ms % 3600000) / 60000);
+      const seconds = Math.floor((ms % 60000) / 1000);
+      
+      document.getElementById('rewardTimer').textContent = 
+        `Next reward in: ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // Թայմերի սկսում
+    function startTimer() {
+      clearInterval(rewardInterval);
+      rewardInterval = setInterval(() => {
+        const timeLeft = 86400000 - (Date.now() - lastClaimTime);
+        if (timeLeft <= 0) {
+          renderDailyReward();
+          clearInterval(rewardInterval);
+        } else {
+          updateTimerDisplay(timeLeft);
+        }
+      }, 1000);
+    }
+
+    // Claim-ի մշակում
+    function handleDailyClaim() {
+  lastClaimTime = Date.now();
+  localStorage.setItem('lastClaimTime', lastClaimTime);
+  
+  userScore += 1000;
+  updateScore();
+  addToHistory(1000, 'Claimed daily reward');
+  saveScoreHistory();
+  renderDailyReward();
+
+  showNotification(`Claimed +1000`);}
+
+
+    // Ինիցիալիզացիա
+    function initApp() {
+      loadScoreHistory();
+
+      loadState();
+      setupTabs();
+      setupCloseButton();
+      renderTasks();
+      renderDailyReward(); // Փոխված է
+      renderProfile();
+      updateScore();
+    }
+// ⏱️ Պահել որ օրը վերցվել է reward-ը
+let claimDays = JSON.parse(localStorage.getItem("dailyClaimDays") || "[]");
+const today = new Date().toDateString(); // օրինակ՝ "Sat May 10 2025"
+if (!claimDays.includes(today)) {
+    claimDays.push(today);
+}
+if (claimDays.length > 3) {
+    claimDays = claimDays.slice(-3); // պահիր վերջին 3 օրը
+}
+localStorage.setItem("dailyClaimDays", JSON.stringify(claimDays));
+
+    document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".tab-button");
+            const contents = document.querySelectorAll(".tab-content");
+
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const targetTab = button.getAttribute("data-tab");
+
+                    // Remove active class from previous tab & button
+                    document.querySelector(".tab-button.active").classList.remove("active");
+                    document.querySelector(".tab-content.active").classList.remove("active");
+
+                    // Add fade-out effect
+                    setTimeout(() => {
+                        contents.forEach(content => content.style.display = "none");
+
+                        // Activate the new tab
+                        document.getElementById(targetTab).style.display = "block";
+                        setTimeout(() => document.getElementById(targetTab).classList.add("active"), 10);
+                    }, 400);
+
+                    // Add active class to the clicked button
+                    button.classList.add("active");
+                });
+            });
+        });
+
+
+      
+
+requestAnimationFrame(draw);
+
+
+function handleDailyQuest() {
+    const lastClaimTime = localStorage.getItem(questCooldownKey);
+    const now = new Date().getTime();
+    const cooldownTime = 24 * 60 * 60 * 1000; // 24 ժամ
+
+    if (lastClaimTime && now - lastClaimTime < cooldownTime) {
+        document.getElementById("questMessage").innerText = "❌ You can enter the code again in 24 hours!";
+        return;
+    }
+
+    const userCode = document.getElementById("dailyCodeInput").value;
+    if (userCode === dailyCode) {
+    document.getElementById("questMessage").innerHTML = "✅ Correct code! You earned +750<i class='fas fa-star'></i>!";
+    localStorage.setItem(questCooldownKey, now);
+    
+    // ✅ Show notification with star icon
+    showNotification(`+750 Claimed!`);
+    
+} else {
+    document.getElementById("questMessage").innerText = "❌ Incorrect code! Try again.";
+}
+}
+
+// Պահպանենք սկզբնական նկարները և սեղմելուց հետո փոփոխվող նկարները
+const tabImages = {
+        play: {
+            default: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-51-07-122.jpg",
+            active: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20Mar%2030%2C%202025%2C%2003_34_08%20PM.png"
+        },
+        home: {
+            default: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-52-07-873.jpg",
+            active: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20Mar%2030%2C%202025%2C%2003_34_12%20PM.png"
+        },
+        "daily-reward": {
+            default: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-51-28-628.jpg",
+            active: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20Mar%2030%2C%202025%2C%2011_21_31%20PM.png"
+        },
+        profile: {
+            default: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-52-49-352.jpg",
+            active: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20Mar%2030%2C%202025%2C%2003_34_04%20PM.png"
+        },
+      
+
+    };
+
+    document.querySelectorAll(".tab-button").forEach(button => {
+        button.addEventListener("click", function () {
+            // Հանում ենք active դասը բոլոր կոճակներից
+            document.querySelectorAll(".tab-button").forEach(btn => {
+                btn.classList.remove("active");
+                const img = btn.querySelector("img");
+                const tabName = btn.getAttribute("data-tab");
+                img.src = tabImages[tabName].default; // Վերադարձնում ենք նորմալ նկարը
+            });
+
+            // Ավելացնում ենք active դասը սեղմված կոճակին
+            this.classList.add("active");
+            const img = this.querySelector("img");
+            const tabName = this.getAttribute("data-tab");
+            img.src = tabImages[tabName].active; // Փոխում ենք նկարը
+        });
+    });
+
+  </script>
+ <script>
+  document.getElementById("buyBtn").addEventListener("click", () => {
+    Telegram.WebApp.openInvoice({
+      slug: "give-stars-pack-1", // սա փոխիր քո slug-ով
+      callback: function(status) {
+        if (status === 'paid') {
+          alert("Շնորհակալություն գնման համար ⭐");
+          // Այստեղ կարող ես ավելացնել Upgrade logic
+          upgradePlayer(); // օրինակ, level բարձրացնի
+        }
+      }
+    });
+  });
+
+  function upgradePlayer() {
+    // Օրինակ՝ playerLevel++ կամ skin բացվի
+    console.log("Player upgraded!");
+  }
+  function showNotification(message) {
+  const notification = document.getElementById('notification');
+  notification.textContent = message;
+  notification.classList.remove('hidden', 'animate-out');
+  notification.classList.add('animate-in');
+
+  setTimeout(() => {
+    notification.classList.remove('animate-in');
+    notification.classList.add('animate-out');
+    setTimeout(() => {
+      notification.classList.add('hidden');
+    }, 500);
+  }, 2000);
+}
+
+
+function openPopup() {
+  const popup = document.getElementById("popup");
+  popup.style.display = "flex"; // վերդարձ display
+  setTimeout(() => popup.classList.add("active"), 10); // մի փոքր ուշացում transition-ի համար
+}
+
+  function closePopup() {
+    const popup = document.getElementById("popup");
+    popup.classList.add("closing");
+
+    setTimeout(() => {
+      popup.classList.remove("active", "closing");
+      popup.style.display = "none";
+    }, 300); // համապատասխան CSS transition ժամանակը (0.3s)
+  }
+
+
+</script>
+<script>
+  
+// Mystery Box Logic - Customizable Rewards
+document.getElementById("mysteryBtn").onclick = () => {
+    document.getElementById("mysteryPopup").style.display = "block";
+};
+
+document.querySelector(".close").onclick = () => {
+    document.getElementById("mysteryPopup").style.display = "none";
+};
+
+// Կարգավորելի reward-ների տվյալներ
+const REWARD_SETTINGS = {
+    tiers: [
+        { 
+            name: "Common", 
+            chance: 0.6, // 60% հավանականություն
+            min: 2500, 
+            max: 6000 
+        },
+        { 
+            name: "Uncommon", 
+            chance: 0.3, // 30% հավանականություն
+            min: 3000, 
+            max: 7000 
+        },
+        { 
+            name: "Rare", 
+            chance: 0.1, // 10% հավանականություն
+            min: 10000, 
+            max: 12000 
+        },
+
+         {
+            name: "Legendary",
+            chance: 0.05,
+            min: 18000,
+            max: 20000
+          },
+          {
+            name: "imposibe",
+            chance: 0.0005,
+            min: 25000,
+            max: 50000
+          }
+    ]
+};
+
+document.querySelectorAll(".box").forEach(box => {
+    box.onclick = () => {
+        const cost = parseInt(box.dataset.cost);
+        if (userScore >= cost) {
+            // Reward-ի հաշվարկը նոր տրամաբանությամբ
+            let random = Math.random();
+            let cumulativeChance = 0;
+            let selectedTier = REWARD_SETTINGS.tiers[0]; // Default
+            
+            for (const tier of REWARD_SETTINGS.tiers) {
+                cumulativeChance += tier.chance;
+                if (random <= cumulativeChance) {
+                    selectedTier = tier;
+                    break;
+                }
+            }
+            
+            const reward = Math.floor(
+                Math.random() * (selectedTier.max - selectedTier.min + 1) 
+                + selectedTier.min
+            );
+
+            userScore -= cost;
+            addToHistory(-cost, `Opened ${box.classList.contains('gold') ? 'Gold' : 'Diamond'} Box`);
+
+           userScore -= cost;
+addToHistory(-cost, `Opened ${box.classList.contains('gold') ? 'Gold' : 'Diamond'} Box`);
+
+userScore += reward;
+addToHistory(reward, `Reward from ${selectedTier.name} tier`);
+saveScoreHistory();
+localStorage.setItem("userScore", userScore);
+
+updateScore();
+
+            
+            Swal.fire({
+    icon: 'success',
+    title: '🎉 Congratulations!',
+    html: `You won ${reward} <i class="fas fa-star"></i> (${selectedTier.name} Reward)<br>
+           <small>Total <i class="fas fa-star"></i>${userScore}</small>`,
+    confirmButtonText: 'OK',
+    customClass: {
+        popup: 'reward-popup'
+    }
+});
+} else {
+Swal.fire({
+    icon: 'error',
+    title: '🚫 Error',
+    html: `You need ${cost} <i class="fas fa-star"></i><br>
+           <small>Current <i class="fas fa-star"></i>${userScore}</small>`,
+    confirmButtonText: 'OK',
+    customClass: {
+        popup: 'error-popup'
+    }
+            });
+        }
+    };
+});
+document.querySelector('.play-btn').addEventListener('click', function(e) {
+  for(let i = 0; i < 8; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const rect = this.getBoundingClientRect();
+    const angle = (Math.PI * 2 * i) / 8;
+    particle.style.setProperty('--targetX', `${Math.cos(angle) * 50}px`);
+    particle.style.setProperty('--targetY', `${Math.sin(angle) * 50}px`);
+    particle.style.left = `${rect.width/2}px`;
+    particle.style.top = `${rect.height/2}px`;
+    this.appendChild(particle);
+    setTimeout(() => particle.remove(), 1000);
+  }
+});
+
+
+document.querySelector('.play-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  const btn = this;
+  
+  // Ավելացնում ենք clicked կլասը
+  btn.classList.add('clicked');
+  
+  // Կանենք body-ի overflow hidden
+  document.body.style.overflow = 'hidden';
+  
+  // Անիմացիայի ավարտից հետո տանում ենք game.html
+  setTimeout(() => {
+    window.location.href = 'game.html';
+  }, 600); // Համապատասխանեցրեք անիմացիայի տևողությանը (0.6s)
+  
+  // Particle effects (ըստ ցանկության)
+  for(let i = 0; i < 15; i++) {
+    const particle = document.createElement('div');
+    particle.style.cssText = `
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #00d0ff;
+      border-radius: 50%;
+      pointer-events: none;
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      animation: explode 0.8s ease-out both;
+    `;
+    btn.appendChild(particle);
+    setTimeout(() => particle.remove(), 800);
+  }
+});
+
+// CSS անիմացիա particle-ների համար
+const style = document.createElement('style');
+style.textContent = `
+@keyframes explode {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(3); opacity: 0; }
+}`;
+document.head.appendChild(style);
+  </script>
+
+<style>
+.swal2-popup {
+    font-size: 0,5rem !important;
+    border-radius: 22px !important;
+}
+</style>
+
+<!-- Reward Info Popup -->
+<div id="rewardPopup" class="popup" style="display:none;">
+  <div class="popup-content">
+    <h3>🏅 All Medals</h3>
+    <ul id="allMedalsList"></ul>
+    <button styclass="close-medal" onclick="closeRewardPopup()">Close</button>
+  </div>
+</div>
+
+
+<script>
+function openRewardPopup() {
+  document.getElementById("rewardPopup").style.display = "block";
+  const list = document.getElementById("allMedalsList");
+  const medals = [
+    { score: 100, emoji: '<i class="fas fa-medal" style="color: #cd7f32;"></i>', label: 'Bronze Medal' },
+    { score: 10000, emoji: '<i class="fas fa-medal" style="color: #c0c0c0;"></i>', label: 'Silver Medal' },
+    { score: 50000, emoji: '<i class="fas fa-medal" style="color: #ffd700;"></i>', label: 'Gold Medal' },
+    { score: 150000, emoji: '<i class="fas fa-trophy" style="color: #e5e4e2;"></i>', label: 'Platinum Medal' },
+    { score: 500000, emoji: '<i class="fas fa-gem" style="color: #b9f2ff;"></i>', label: 'Diamond Medal' },
+    { score: 1000000, emoji: '<i class="fas fa-trophy" style="color: gold;"></i>', label: 'Millionaire Medal' },
+    { score: 5000000, emoji: '<i class="fas fa-crown" style="color: #ffd700;"></i>', label: 'Legend Medal' },
+    { score: 10000000, emoji: '<i class="fas fa-infinity" style="color: #4b0082;"></i>', label: 'God Mode Medal' }
+  ];
+  list.innerHTML = medals.map(m => `<li>${m.emoji} ${m.label} — ${formatScore(m.score)}+</li>`).join("");
+}
+function closeRewardPopup() {
+  document.getElementById("rewardPopup").style.display = "none";
+}
+async function sendScoreToServer() {
+  const tgUser = Telegram.WebApp.initDataUnsafe.user;
+  const score = userScore; // սա արդեն կա քո կոդում
+
+  const body = {
+    id: tgUser.id.toString(),
+    username: tgUser.username,
+    newScore: score
+  };
+
+  try {
+    const res = await fetch("http://localhost:3000/update-score", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+    console.log("✅ Server response:", data);
+  } catch (err) {
+    console.error("❌ Failed to update score:", err);
+  }
+}
+
+</script>
+
+</body>
+</html>
+
+<!-- <script src="phoneweb.js"></script>
+<script>
+  if (Telegram.WebApp.platform !== 'android' && Telegram.WebApp.platform !== 'ios') {
+    document.body.innerHTML = `
+      <style>
+        body {
+          margin: ;
+          padding: 10px;
+          font-family: Arial, sans-serif;
+          background:rgb(0, 0, 0);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          text-align: center;
+        }
+  
+        .message {
+          max-width: 400px;
+        }
+  
+        img {
+          margin-top: 25px;
+          width: 200px;
+          height: 200px;
+        }
+          po{
+              font-weight: bold;}
+
+       
+      </style>
+  
+      <div class="message">
+        <h2>Please open the game on your phone.</h2>
+        <p class = po >Open this QR code with your phone to start the game.</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://t.me/hyperrverse_bot" alt="QR Code">
+      </div>
+    `;
+  }
+  window.addEventListener("load", () => {
+    if (typeof Telegram === 'undefined' || typeof Telegram.WebApp === 'undefined') {
+      document.body.innerHTML = `
+        <style>
+          body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: black;
+            text-align: center;
+            font-family: Arial, sans-serif;
+          }
+          img {
+            margin-top: 20px;
+            width: 200px;
+            height: 200px;
+          }
+            p{
+                          font-weight: bold;}
+
+            }
+        </style>
+        <h2>The game can only be opened from within Telegram.</h2>
+        <p>Use the Telegram bot to play</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://t.me/hyperrverse_bot" alt="QR Code">
+      `;
+    } else {
+      // Telegram WebApp միջավայրն է՝ այստեղից թող գործի քո խաղը
+      console.log("Բացվել է Telegram-ի միջով ✅");
+    }
+  });
+
+</script>
+
+
+
