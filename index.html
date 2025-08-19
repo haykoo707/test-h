@@ -107,11 +107,7 @@ function watchAdAndReward(taskId) {
     <!-- Վերևի տող -->
     <div class="top-bar">
       <div class="social-icons">
-        <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Menu">
-          <i class="fas fa-bars"></i></button>
-         <button id="inviteButton1" class="invite-button1">
-            <i class="fas fa-user-friends"></i></button>
-
+  
 <!-- Welcome Bonus Popup -->
 <div id="welcomePopup" class="popupbonus">
   <div class="popup-content">
@@ -300,9 +296,7 @@ window.addEventListener('DOMContentLoaded', () => {
 </button>
       <button class="tab-button" data-tab="home">
         <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-52-07-873.jpg" alt="Tasks" class="tasks-icon">
-        <button class="tab-button" data-tab="daily-reward">
-          <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-51-28-628.jpg" alt="Reward" class="reward-icon">
-
+        
       <button class="tab-button" data-tab="profile">
         <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-52-49-352.jpg" alt="Profile" class="profile-icon">
       </button>
@@ -399,22 +393,14 @@ window.addEventListener('DOMContentLoaded', () => {
 <div id="play" class="tab-content active">
   <div class="score-container">
 <div class="score-icon">
-  <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20May%2019%2C%202025%2C%2001_35_59%20PM.png" alt="Paw Icon" class="score-image" />
+  <img src="ChatGPT Image Aug 19, 2025, 04_38_33 PM.png" alt="Paw Icon" class="score-image" />
 </div>
     <div class="score-text" id="userScoreDisplay">0</div>
     <div id="medalsContainer" onclick="openRewardPopup()"></div>
       <div class="button-group">
-<button class="custom-btn" onclick="openGamesPopup()">
-  <i class="fas fa-dice" style="color: #ffffffef; font-size: 1.3em;"></i> Test your luck
 
 
-</button>
 
-<button class="custom-btn" onclick="window.location.href='https://t.me/HyperrVersee'">
-  <i class="fab fa-telegram-plane" style="color: #ffffffef; font-size: 1.3em;"></i> Join Telegram Community
-</button>
-<button class="custom-btn" onclick="window.location.href='https://x.com/HyperVerse_TG'">
-  <i class="fa-brands fa-x-twitter" style="color: #ffffffef; font-size: 1.3em;"></i> Join X Community
 </button>
 
 
@@ -424,167 +410,6 @@ window.addEventListener('DOMContentLoaded', () => {
 </div>
   </div>
 </div>
-<!-- Popup Container -->
-<div id="casinoPopup" class="popup" style="display:none;">
-  <div class="popup-content">
-    <span class="close" onclick="closeGamesPopup()">&times;</span>
-    <h2 id="gameTitle"class="font-size: 8px;"><i class="fas fa-dice" style="color: #00d0ff; padding-bottom: 10px;padding-right: 5px;"></i>Slots</h2>
-
-    
-
-    <div id="slotsGame" class="game-section">
-      <p><i class="fas fa-star" style="color: #00d0ff;"></i> <span id="currentScoreSlots">0</span></p>
-      <div class="input-group">
-        <i class="fas fa-coins input-icon"></i>
-        <input type="number" id="betAmountSlots" placeholder="Enter your bet" min="1">
-      </div>
-      <button onclick="playSlots()">
-        <i class="fas fa-sync-alt spin-icon"></i> 
-        Spin
-      </button>
-      <p id="resultTextSlots" class="result-text"></p>
-    </div>
-  </div>
-</div>
-
-<script>
-function openGamesPopup() {
-  document.getElementById('casinoPopup').style.display = 'flex';
-  updateScoreDisplay();
-}
-
-function closeGamesPopup() {
-  document.getElementById('casinoPopup').style.display = 'none';
-}
-
-function getUserScore() {
-  return parseInt(localStorage.getItem('userScore') || '0');
-}
-
-function setUserScore(score) {
-  localStorage.setItem('userScore', score);
-  updateScoreDisplay();
-}
-
-function updateScoreDisplay() {
-  const score = getUserScore();
-  document.getElementById('currentScoreSlots').innerText = score;
-}
-
-function switchGame(game) {
-  const slotsGame = document.getElementById('slotsGame');
-  const gameTitle = document.getElementById('gameTitle');
-  
-  if(game === 'slots') {
-    slotsGame.style.display = 'block';
-    gameTitle.innerHTML = '<i class="fas fa-sliders-h" style="color: #00d0ff;"></i> Slot Machine';
-  }
-}
-
-function playSlots() {
-  const bet = parseInt(document.getElementById('betAmountSlots').value);
-  let score = getUserScore();
-  
-  if (isNaN(bet) || bet <= 0 || bet > score) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Invalid Bet',
-      html: `<i class="fas fa-exclamation-triangle"></i> Please enter a valid amount!`,
-      confirmButtonColor: '#FF4444'
-    });
-    return;
-  }
-
-const regularSymbols = [
-  '<i class="fas fa-coins" style="color: #FFD700;"></i>', // Ոսկե դեղին - մետաղադրամներ
-  '<i class="fas fa-crown" style="color: #FFDF00;"></i>', // Թագի ոսկի
-  '<i class="fas fa-diamond" style="color: #00d0ff;"></i>', // Ադամանդի կապույտ
-  '<i class="fas fa-chess-knight" style="color: #666666;"></i>', // Մետաղական մոխրագույն
-  '<i class="fas fa-bolt" style="color: #00BFFF;"></i>', // Էլեկտրական կապույտ
-  '<i class="fas fa-bomb" style="color: #FF4444;"></i>', // Կարմիր վտանգ
-  '<i class="fas fa-anchor" style="color: #2E5A88;"></i>', // Ծովային նավարի կապույտ
-  '<i class="fas fa-leaf" style="color: #4CAF50;"></i>', // Բնության կանաչ
-  '<i class="fas fa-feather-alt" style="color: #A0522D;"></i>' // Բնական շագանակագույն
-];
-
-
-  const jackpotSymbol = '<i class="fas fa-gem" style="color: #ff69b4;"></i>';
-  
-  // Սիմվոլների գեներացիա 2% հավանականությամբ jackpot-ի համար
-  function getSlotSymbol() {
-    return Math.random() < 0.07 ? jackpotSymbol : 
-           regularSymbols[Math.floor(Math.random() * regularSymbols.length)];
-  }
-
-  const symbols = [getSlotSymbol(), getSlotSymbol(), getSlotSymbol()];
-  
-  let resultHTML = `
-    <div class="slot-result">
-      <div class="slot-wheel">
-        <div class="slot-symbol">${symbols[0]}</div>
-        <div class="slot-symbol">${symbols[1]}</div>
-        <div class="slot-symbol">${symbols[2]}</div>
-      </div>
-      <div class="result-message">
-  `;
-
-  // Jackpot պայմանների ստուգում
-  const isJackpot = symbols.every(s => s === jackpotSymbol);
-  const isThreeSame = symbols[0] === symbols[1] && symbols[1] === symbols[2];
-  const isTwoSame = symbols[0] === symbols[1] || symbols[1] === symbols[2] || symbols[0] === symbols[2];
-
-  if (isJackpot) {
-    const win = bet * 25;
-    score += win;
-    resultHTML += `
-        <div class="jackpot-animation">
-          <i class="fas fa-rocket fa-spin"></i>
-          <h3 style="color: #ff69b4;">MEGA JACKPOT +${win} <i class="fas fa-star"></i>
-</h3>
-        </div>`;
-  } 
-  else if (isThreeSame) {
-    const win = bet * 4;
-    score += win;
-    resultHTML += `
-        <div class="win-animation">
-          <i class="fas fa-trophy bounce"></i>
-          <h3 style="color: #4CAF50;">+${win} <i class="fas fa-star"></i>
-</h3>
-        </div>`;
-  }
-  else if (isTwoSame) {
-    const win = bet * 1.5;
-    score += win;
-    resultHTML += `
-        <div class="win-animation">
-          <h3 style="color: #FFD700;">+${win}  <i class="fas fa-star"></i>
-</h3>
-        </div>`;
-  }
-  else {
-    score -= bet;
-    resultHTML += `
-        <div class="loss-message">
-          <h3 style="color: #FF4444;">-${bet} <i class="fas fa-star"></i>
-</h3>
-        </div>`;
-  }
-
-  resultHTML += `</div></div>`;
-  
-  setUserScore(score);
-  document.getElementById('resultTextSlots').innerHTML = resultHTML;
-
-  // Անիմացիա jackpot-ի դեպքում
-  if(isJackpot) {
-    document.querySelector('.jackpot-animation').classList.add('blink');
-    setTimeout(() => {
-      new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3').play();
-    }, 500);
-  }
-}
-</script>
 
 
 <script>
@@ -649,8 +474,8 @@ document.getElementById("userScoreDisplay").innerHTML = `
 </div>
 
 <div class="loading-screen" id="loadingScreen">
-  <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20May%2019%2C%202025%2C%2001_35_59%20PM.png" alt="Loading..." class="loading-image animate-loading">
-  <h5 class="loadingh5">5.1.x</h5> 
+  <img src="ChatGPT Image Aug 19, 2025, 04_38_33 PM.png" alt="Loading..." class="loading-image animate-loading">
+  <h5 class="loadingh5">test</h5> 
 </div>
 
 
@@ -1651,75 +1476,14 @@ function updateScore() {
     </div>
   </div>
 
+  
 
-  <button class="sp-btn" onclick="window.location.href='paymentsup.html'">
-    Support the project <i class="fas fa-hand-holding-usd"></i>
-  </button>  
 
-  <button class="delete-btn" onclick="showDeleteModal()">
-    Delete All Data <i class="fas fa-trash-alt"></i>
-  </button>
 
-  <!-- Delete Confirmation Modal -->
-  <div class="delete-modal">
-    <div class="modal-content">
-      <i class="fas fa-exclamation-triangle modal-icon"></i>
-      <h3>Warning!</h3>
-      <p>Are you sure you want to delete ALL data?<br>This action cannot be undone!</p>
-      <div class="modal-buttons">
-        <button class="modal-btn cancel-btn" onclick="closeDeleteModal()">
-          <i class="fas fa-times"></i> Cancel
-        </button>
-        <button class="modal-btn confirm-btn" onclick="handleDeleteConfirm()">
-          <i class="fas fa-trash"></i> Delete
-        </button>
-      </div>
-    </div>
-  </div>
 
-  <!-- User Stats -->
-  <div class="user-stats">
-    <div class="stat-item">
-      <i class="fas fa-users"></i>
-      <span>Total Users: <strong id="total-users">34</strong></span>
-    </div>
-    <div class="stat-item">
-      <i class="fas fa-user-check"></i>
-      <span>Active Users: <strong id="active-users">12</strong></span>
-    </div>
-  </div>
+
 `;
 
-}
-function showDeleteModal() {
-  document.querySelector('.delete-modal').style.display = 'flex';
-}
-
-function closeDeleteModal() {
-  document.querySelector('.delete-modal').style.display = 'none';
-}
-
-function showDeletePopup(message) {
-  const popup = document.querySelector('.delete-popup');
-  popup.textContent = message;
-  popup.style.display = 'block';
-
-  setTimeout(() => {
-    popup.style.display = 'none';
-  }, 3000);
-}
-
-function handleDeleteConfirm() {
-  try {
-    localStorage.clear();
-    showDeletePopup('All data has been successfully deleted!');
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
-    closeDeleteModal();
-  } catch (error) {
-    showDeletePopup('Error deleting data: ' + error.message);
-  }
 }
 
 
@@ -1746,66 +1510,6 @@ function handleDeleteConfirm() {
     }
     
 
-    // Մնացած կոդը մնում է նույնը...
-
-    // Daily Reward համակարգ
-    let lastClaimTime = localStorage.getItem('lastClaimTime') || 0;
-    let rewardInterval;
-
-    // Daily Reward-ի ցուցադրում
-    function renderDailyReward() {
-      const now = Date.now();
-      const timeLeft = 86400000 - (now - lastClaimTime);
-      const claimBtn = document.getElementById('claimRewardBtn');
-      const timerEl = document.getElementById('rewardTimer');
-
-      if (timeLeft > 0) {
-        claimBtn.disabled = true;
-        updateTimerDisplay(timeLeft);
-        startTimer();
-      } else {
-        claimBtn.disabled = false;
-        timerEl.textContent = "available now";
-      }
-    }
-
-    // Թայմերի ցուցադրում
-    function updateTimerDisplay(ms) {
-      const hours = Math.floor(ms / 3600000);
-      const minutes = Math.floor((ms % 3600000) / 60000);
-      const seconds = Math.floor((ms % 60000) / 1000);
-      
-      document.getElementById('rewardTimer').textContent = 
-        `Next reward in: ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    // Թայմերի սկսում
-    function startTimer() {
-      clearInterval(rewardInterval);
-      rewardInterval = setInterval(() => {
-        const timeLeft = 86400000 - (Date.now() - lastClaimTime);
-        if (timeLeft <= 0) {
-          renderDailyReward();
-          clearInterval(rewardInterval);
-        } else {
-          updateTimerDisplay(timeLeft);
-        }
-      }, 1000);
-    }
-
-    // Claim-ի մշակում
-    function handleDailyClaim() {
-  lastClaimTime = Date.now();
-  localStorage.setItem('lastClaimTime', lastClaimTime);
-  
-  userScore += 1000;
-  updateScore();
-  addToHistory(1000, 'Claimed daily reward');
-  saveScoreHistory();
-  renderDailyReward();
-
-  showNotification(`Claimed +1000`);}
-
 
     // Ինիցիալիզացիա
     function initApp() {
@@ -1819,43 +1523,7 @@ function handleDeleteConfirm() {
       renderProfile();
       updateScore();
     }
-// ⏱️ Պահել որ օրը վերցվել է reward-ը
-let claimDays = JSON.parse(localStorage.getItem("dailyClaimDays") || "[]");
-const today = new Date().toDateString(); // օրինակ՝ "Sat May 10 2025"
-if (!claimDays.includes(today)) {
-    claimDays.push(today);
-}
-if (claimDays.length > 3) {
-    claimDays = claimDays.slice(-3); // պահիր վերջին 3 օրը
-}
-localStorage.setItem("dailyClaimDays", JSON.stringify(claimDays));
 
-    document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll(".tab-button");
-            const contents = document.querySelectorAll(".tab-content");
-
-            buttons.forEach(button => {
-                button.addEventListener("click", () => {
-                    const targetTab = button.getAttribute("data-tab");
-
-                    // Remove active class from previous tab & button
-                    document.querySelector(".tab-button.active").classList.remove("active");
-                    document.querySelector(".tab-content.active").classList.remove("active");
-
-                    // Add fade-out effect
-                    setTimeout(() => {
-                        contents.forEach(content => content.style.display = "none");
-
-                        // Activate the new tab
-                        document.getElementById(targetTab).style.display = "block";
-                        setTimeout(() => document.getElementById(targetTab).classList.add("active"), 10);
-                    }, 400);
-
-                    // Add active class to the clicked button
-                    button.classList.add("active");
-                });
-            });
-        });
 
 
         const canvas = document.getElementById("starCanvas");
@@ -1866,7 +1534,7 @@ canvas.height = window.innerHeight;
 
 // Աստղեր
 const stars = [];
-const numStars = 242;
+const numStars = 88;
 
 for (let i = 0; i < numStars; i++) {
     stars.push({
@@ -1939,28 +1607,6 @@ function handleDailyQuest() {
     document.getElementById("questMessage").innerText = "❌ Incorrect code! Try again.";
 }
 }
-
-// Պահպանենք սկզբնական նկարները և սեղմելուց հետո փոփոխվող նկարները
-const tabImages = {
-        play: {
-            default: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-51-07-122.jpg",
-            active: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20Mar%2030%2C%202025%2C%2003_34_08%20PM.png"
-        },
-        home: {
-            default: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-52-07-873.jpg",
-            active: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20Mar%2030%2C%202025%2C%2003_34_12%20PM.png"
-        },
-        "daily-reward": {
-            default: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-51-28-628.jpg",
-            active: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20Mar%2030%2C%202025%2C%2011_21_31%20PM.png"
-        },
-        profile: {
-            default: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/Picsart_25-03-28_20-52-49-352.jpg",
-            active: "https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/ChatGPT%20Image%20Mar%2030%2C%202025%2C%2003_34_04%20PM.png"
-        },
-      
-
-    };
 
     document.querySelectorAll(".tab-button").forEach(button => {
         button.addEventListener("click", function () {
