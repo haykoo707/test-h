@@ -1408,7 +1408,7 @@ function updateScore() {
       score: localStorage.getItem("userScore") ? parseInt(localStorage.getItem("userScore")) : 0
     };
 
-    function renderProfile() {
+function renderProfile() {
   const profileInfo = document.getElementById('profileInfo');
   const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
 
@@ -1423,7 +1423,7 @@ function updateScore() {
   const displayName = user.username 
     ? '@' + user.username 
     : (user.first_name + ' ' + (user.last_name || ''));
-
+  
   const photoUrl = user.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
   profileInfo.innerHTML = `
@@ -1443,7 +1443,6 @@ function updateScore() {
 </span>
     </div>
   </div>
-
 
   <button class="sp-btn" onclick="window.location.href='paymentsup.html'">
     Support the project <i class="fas fa-hand-holding-usd"></i>
@@ -1482,8 +1481,9 @@ function updateScore() {
     </div>
   </div>
 `;
-
 }
+
+
 function showDeleteModal() {
   document.querySelector('.delete-modal').style.display = 'flex';
 }
