@@ -1456,7 +1456,10 @@ function updateScore() {
 
  
 
-    
+        window.Telegram.WebApp.ready();
+
+    const user = window.Telegram.WebApp.initDataUnsafe?.user;
+
 
    profileInfo.innerHTML = `
   <h2 style="color: #fff; margin-bottom: 12px;"></h2>
@@ -1563,7 +1566,7 @@ canvas.height = window.innerHeight;
 
 // Աստղեր
 const stars = [];
-const numStars = 88;
+const numStars = 55;
 
 for (let i = 0; i < numStars; i++) {
     stars.push({
