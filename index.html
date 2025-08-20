@@ -152,130 +152,9 @@ window.addEventListener("load", () => {
 
 </script>
 
-          <!-- Popup -->
-<div id="popupOverlay1" class="popup-overlay1">
-  <div class="popup-content1">
-    <h2 style=" margin-bottom: 15px; ">Invite your frens!</h2>
-    <p style=" margin-bottom: 15px;">Share your referral link so we can become famous<i class="fas fa-heart heartbeat" style="color: #00d0ff; font-size: 17px;"></i>
-    </p>
-    <div class="referral-section">
-      <input type="text" id="referralLink" value="https://t.me/hyperrverse_bot" readonly />
-      <button id="copyButton" class="copy-button"><i class="fas fa-copy"></i></button>
-    </div>
-
-    <a id="shareTelegram" class="share-telegram" href="#" target="_blank">
-      <i class="fab fa-telegram-plane"></i>
-      Share on Telegram
-    </a>
-    <button id="closePopup1" class="close-button1">Close</button>
-  </div>
-</div>
-
-
         
 
-<script>
 
-const inviteButton = document.getElementById('inviteButton1');
-const popupOverlay = document.getElementById('popupOverlay1');
-const closePopup = document.getElementById('closePopup1');
-const copyButton = document.getElementById('copyButton');
-const referralLink = document.getElementById('referralLink');
-const shareTelegram = document.getElementById('shareTelegram');
-
-inviteButton.addEventListener('click', () => {
-  popupOverlay.classList.add('active');
-  
-  // Update Telegram share link
-  const link = referralLink.value;
-  const message = encodeURIComponent(`Hey! Join here: ${link}`);
-  shareTelegram.href = `https://t.me/share/url?url=${link}&text=${message}`;
-});
-
-closePopup.addEventListener('click', () => {
-  popupOverlay.classList.remove('active');
-});
-
-copyButton.addEventListener('click', () => {
-  referralLink.select();
-  document.execCommand('copy');
-  copyButton.innerHTML = `
-    <i class="fas fa-copy"></i>
-    
-  `;  setTimeout(() => {
-    copyButton.innerHTML = `
-      <i class="fas fa-copy"></i>
-      
-    `;
-    }, 1500);
-});
-
-// Create the menu on page load
-window.addEventListener('DOMContentLoaded', () => {
-  const topBar = document.querySelector('.top-bar');
-
-  // Create menu container
-  const menu = document.createElement('div');
-  menu.id = 'mobile-menu';
-  menu.className = 'menu-dropdown hidden';
-
-  // Menu items
-  const items = [
-    { text: 'Website', href: 'https://hyper070.github.io/HYPERVERSEweb/' },
-    { text: 'History', href: '#' }, // Changed to # for JS handling
-
-
-  ];
-
-  items.forEach(item => {
-    const a = document.createElement('a');
-    a.href = item.href;
-    a.textContent = item.text;
-    
-    // Special handling for History item
-    if (item.text === 'History') {
-      a.addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent default link behavior
-        showHistoryPopup(); // Show history popup
-        toggleMenu(); // Close menu
-      });
-    } else {
-      a.target = '_blank'; // Other links open in new tab
-      a.rel = 'noopener noreferrer'; // Security for external links
-    }
-    
-    menu.appendChild(a);
-  });
-
-  // Append menu to top-bar
-  topBar.appendChild(menu);
-});
-
-        
-          // Toggle menu visibility
-          function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            if (menu) {
-              menu.classList.toggle('hidden');
-            }
-          }
-        
-          // Optional: Click outside to close
-          document.addEventListener('click', (e) => {
-            const button = document.querySelector('.mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-        
-            if (menu && !button.contains(e.target) && !menu.contains(e.target)) {
-              menu.classList.add('hidden');
-            }
-          });
-          function toggleMenu() {
-  const menu = document.getElementById('mobile-menu');
-  if (menu) {
-    menu.classList.toggle('show');
-    menu.classList.remove('hidden');
-  }
-}
 
         </script>
         
@@ -359,16 +238,18 @@ window.addEventListener('DOMContentLoaded', () => {
     <div style="
       display:flex;
       align-items:center;
-      gap:15px;
-      padding:15px;
+      gap:10px;
+      padding:10px;
       background:#1e1e1e;
       border-radius:14px;
       box-shadow:0 4px 10px rgba(0,0,0,0.5);
       color:#fff;
+      border-top:2px solid #fff; 
+      margin-top:-26px;
     ">
       <img src="${user.photo_url || ''}" 
            alt="Profile Photo" 
-           style="width:80px;height:80px;border-radius:50%;object-fit:cover;${user.photo_url ? '' : 'display:none;'}">
+           style="width:80px;height:80px;border-radius:50%;object-fit:cover;;${user.photo_url ? '' : 'display:none;'}">
       <div style="flex:1;">
         <h3 style="margin:0;font-size:18px;color:#fff;">${user.first_name} ${user.last_name || ''}</h3>
         <p style="margin:3px 0; color:#aaa;">@${user.username || '—'}</p>
@@ -384,15 +265,12 @@ window.addEventListener('DOMContentLoaded', () => {
 <div id="play" class="tab-content active">
   <div class="score-container">
 <div class="score-icon">
-  <img src="ChatGPT Image Aug 19, 2025, 04_38_33 PM.png" alt="Paw Icon" class="score-image" />
+  <img src="ChatGPT Image Aug 20, 2025, 10_39_44 PM.png" alt="Paw Icon" class="score-image" />
 </div>
     <div class="score-text" id="userScoreDisplay">0</div>
     <div id="medalsContainer" onclick="openRewardPopup()"></div>
       <div class="button-group">
-
-
-
-</button>
+        <button class="farmingbtn">Start Farming</button>
 
 
 
@@ -466,7 +344,7 @@ document.getElementById("userScoreDisplay").innerHTML = `
 
 <div class="loading-screen" id="loadingScreen">
   <img src="ChatGPT Image Aug 19, 2025, 04_38_33 PM.png" alt="Loading..." class="loading-image animate-loading">
-  <h5 class="loadingh5">test</h5> 
+  <h5 class="loadingh5">0.1v</h5> 
 </div>
 
 

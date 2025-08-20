@@ -1121,16 +1121,17 @@ h2{
 .score-text {
   text-align: center;
   font-size: 33px;
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 .score-rank {
   font-size: 14px;
-  color: #aaa;
+  color: #ffffff;
   margin-top: 8px;
 }
 .score-image {
-  width: 166px;
+  margin-top: -25px;
+  width: 170px;
   height: 170px;
   object-fit: contain;
 }
@@ -1341,3 +1342,15 @@ input[type=number] {
 }
 
 
+.farmingbtn{ 
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #891bef;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  width: 110%;
+  border: #ffffff solid 2px;
+  font-weight: bold;
+
+}
