@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3QW0MCBKEC"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://adsgram.io/static/adsgram.min.js"></script>
 <script>
@@ -270,7 +270,16 @@ window.addEventListener("load", () => {
     <div class="score-text" id="userScoreDisplay">0</div>
     <div id="medalsContainer" onclick="openRewardPopup()"></div>
       <div class="button-group">
-        <button class="farmingbtn">Start Farming</button>
+       <button class="btn farmingbtn" onclick="window.location.href='mining.html'">
+                <i class="fas fa-seedling icon"></i>
+                Start Farming
+            </button>
+            
+            <button class="btn spinbtn" onclick="window.location.href='spin.html'">
+                <i class="fas fa-sync-alt icon"></i>
+                Spin
+            </button>
+
 
 
 
@@ -282,6 +291,85 @@ window.addEventListener("load", () => {
 
 
 <script>
+  // Փոխարինիր քո setupTabs() ֆունկցիան սրանով
+
+function setupTabs() {
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+  
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Ripple էֆեկտ
+      button.classList.add('clicked');
+      setTimeout(() => button.classList.remove('clicked'), 500);
+      
+      // Գտնել ներկայիս active content
+      const currentActive = document.querySelector('.tab-content.active');
+      const targetTab = button.getAttribute('data-tab');
+      const targetContent = document.getElementById(targetTab);
+      
+      // Եթե նույն tab-ն է՝ return
+      if (currentActive === targetContent) return;
+      
+      // Սկսել transition
+      if (currentActive) {
+        currentActive.classList.add('slide-out');
+        
+        setTimeout(() => {
+          // Հանել active-ը բոլոր content-ներից
+          tabContents.forEach(tc => {
+            tc.classList.remove('active', 'slide-out');
+          });
+          
+          // Ավելացնել active նորին
+          if (targetContent) {
+            targetContent.classList.add('active');
+          }
+        }, 300); // slide-out տևողությունը
+      } else {
+        // Եթե ոչ մի active չկա, ուղղակի ցույց տալ
+        tabContents.forEach(tc => tc.classList.remove('active'));
+        if (targetContent) {
+          targetContent.classList.add('active');
+        }
+      }
+      
+      // Button active states
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+    
+    // Touch feedback mobile-ի համար
+    button.addEventListener('touchstart', () => {
+      button.style.transform = 'translateY(-1px) scale(0.98)';
+    });
+    
+    button.addEventListener('touchend', () => {
+      setTimeout(() => {
+        if (button.classList.contains('active')) {
+          button.style.transform = 'translateY(-1px) scale(1.1)';
+        } else {
+          button.style.transform = '';
+        }
+      }, 100);
+    });
+  });
+}
+
+// Կարող ես ավելացնել նաև smooth page loading էֆեկտ
+document.addEventListener('DOMContentLoaded', () => {
+  // Սկզբնական active tab-ի անիմացիա
+  const initialActive = document.querySelector('.tab-content.active');
+  if (initialActive) {
+    initialActive.style.opacity = '0';
+    initialActive.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+      initialActive.style.opacity = '1';
+      initialActive.style.transform = 'translateY(0)';
+    }, 100);
+  }
+});
  function updateMedals() {
   const medals = [
     { score: 100, emoji: '<i class="fas fa-medal" style="color: #cd7f32;"></i>', label: 'Bronze Medal' },

@@ -97,7 +97,8 @@ animation: pop 0.3s;
   transition: color 0.3s ease;
     font-size: 24px; /* icon-ի չափը */
   color: #aaa;     /* default գույն */
-  
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
 }
 
 /* Hover effect */
@@ -154,11 +155,39 @@ height: 100%;
 }
 
 .tab-content {
-  display: none;
+transform: translateY(20px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation-fill-mode: forwards;
 }
 .tab-content.active {
-  display: none;
+  display: block;
+  animation: slideInUp 0.3s ease-out forwards;
 }
+.tab-content.slide-out {
+  animation: slideOutDown 0.2s ease-in forwards;
+}
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideOutDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
 /* Home-ի (Tasks) բաժին */
 .task-section h2 {
   margin-bottom: 10px;
@@ -1345,11 +1374,23 @@ input[type=number] {
 .farmingbtn{ 
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #891bef;
+      background: linear-gradient(45deg, #7c20ce, #650eb2);
   color: white;
   border: none;
   border-radius: 14px;
-  width: 110%;
+  width: 105%;
+  border: #ffffff solid 2px;
+  font-weight: bold;
+
+}
+.spinbtn{
+    padding: 10px 20px;
+  font-size: 16px;
+      background: linear-gradient(45deg, #7c20ce, #650eb2);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  width: 105%;
   border: #ffffff solid 2px;
   font-weight: bold;
 

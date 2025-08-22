@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mining App</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  <style>
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #8A2BE2, #191970);
+      background-size: 200% 100%;
+      animation: slide 6s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+    @keyframes slide {
+      0%   { background-position: left; }
+      100% { background-position: right; }
+    }
+
+    header {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .back-btn {
+      background: #8225d8;
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="starCanvas"></canvas>
+
+  <div class="app">
+    <header>
+      <!-- 🔙 Back Button -->
+      <a href="index.html">
+        <button class="back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+      </a>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Mining <i class="fas fa-star"></i>(3-hour cycle)</h2>
+        <p>You can claim your points every 3 hours.</p>
+        <div class="timer-row">
+          <div>
+            <div>Status: <span id="statusText">Inactive</span></div>
+            <div>Countdown: <span id="countdown">00:00:00</span></div>
+          </div>
+          <div>
+            <button id="startMiningBtn">Start Farming</button>
+            <button id="claimBtn" disabled>Claim<i class="fas fa-star"></i></button>
+          </div>
+        </div>
+        <div class="score-row">
+          <div>Your <span id="userScore">0</span><i class="fas fa-star"></i></div>
+          <div>Earn this session: <span id="perSession">1000</span><i class="fas fa-star"></i></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script>
+/* ======== ⭐ Background stars ======== */
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const stars = [];
+const numStars = 55;
+
+for (let i = 0; i < numStars; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    radius: Math.random() * 1,
+    speed: Math.random() * 0.1 + 0.1,
+    alpha: Math.random(),
+    alphaDirection: Math.random() < 0.5 ? -1 : 1
+  });
+}
+
+let lastTime = performance.now();
+
+function draw(currentTime) {
+  const delta = (currentTime - lastTime) / 16.67; 
+  lastTime = currentTime;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach((star) => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(200, 200, 200, ${star.alpha})`;
+    ctx.fill();
+
+    star.y += star.speed * delta;
+    if (star.y > canvas.height) {
+      star.y = 0;
+      star.x = Math.random() * canvas.width;
+    }
+
+    star.alpha += star.alphaDirection * 0.01 * delta;
+    if (star.alpha <= 0 || star.alpha >= 1) {
+      star.alphaDirection *= -1;
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+
+/* ======== ⛏ Mining Script (քո կոդը 그대로) ======== */
+const THREE_HOURS_MS = 3 * 60 * 60 * 1000;
+
+const userScoreEl = document.getElementById('userScore');
+const perSessionEl = document.getElementById('perSession');
+const statusText = document.getElementById('statusText');
+const countdownEl = document.getElementById('countdown');
+const startMiningBtn = document.getElementById('startMiningBtn');
+const claimBtn = document.getElementById('claimBtn');
+const activeBoostEl = document.getElementById('activeBoost');
+const buyBtns = document.querySelectorAll('.buyBtn');
+
+function getLS(key, def){try{return JSON.parse(localStorage.getItem(key))??def}catch{return def}}
+function setLS(key,val){localStorage.setItem(key,JSON.stringify(val))}
+function now(){return Date.now()}
+function formatHMS(ms){if(ms<0)ms=0;const s=Math.floor(ms/1000);const hh=String(Math.floor(s/3600)).padStart(2,'0');const mm=String(Math.floor((s%3600)/60)).padStart(2,'0');const ss=String(s%60).padStart(2,'0');return`${hh}:${mm}:${ss}`}
+function getUserScore(){return getLS('userScore',0)}
+function addUserScore(delta){const s=getUserScore()+delta;setLS('userScore',s);userScoreEl.textContent=s}
+
+function getMining(){return getLS('mining',{active:false,startAt:0})}
+function setMining(obj){setLS('mining',obj)}
+
+let currentPerSession = 1000;
+
+async function refreshBoostStatus(){
+  const acc = tonConnectUI.account;
+  let wallet = acc?.address;
+  try{
+    const url = new URL(BACKEND_URL+'/api/boost-status');if(wallet)url.searchParams.set('wallet',wallet)
+    const r = await fetch(url.toString());
+    const data = await r.json();
+    currentPerSession = data.perSession??1000;
+    perSessionEl.textContent=currentPerSession;
+    if(data.active){
+      activeBoostEl.textContent=`Active boost – ${currentPerSession}/3h, expires ${new Date(data.expiresAt).toLocaleString()}`;
+    }else{activeBoostEl.textContent='No active boost'}
+  }catch(e){console.error(e);currentPerSession=1000;perSessionEl.textContent=currentPerSession;activeBoostEl.textContent='Boost status unavailable'}
+}
+
+function tick(){
+  const m=getMining();
+  if(!m.active){statusText.textContent='Passive';claimBtn.disabled=true;countdownEl.textContent='00:00:00';return}
+  const endAt=m.startAt+THREE_HOURS_MS;const left=endAt-now()
+  if(left<=0){statusText.textContent='Ready to Claim';claimBtn.disabled=false;countdownEl.textContent='00:00:00'}else{statusText.textContent='Active';claimBtn.disabled=true;countdownEl.textContent=formatHMS(left)}
+}
+
+startMiningBtn.addEventListener('click',()=>{const m=getMining();if(m.active)return;setMining({active:true,startAt:now()});tick()})
+claimBtn.addEventListener('click',async()=>{const m=getMining();if(!m.active)return;const endAt=m.startAt+THREE_HOURS_MS;if(now()<endAt)return;await refreshBoostStatus();addUserScore(currentPerSession);setMining({active:false,startAt:0});tick();alert(`✅ Claimed ${currentPerSession} userScore`)})
+setInterval(tick,1000);userScoreEl.textContent=getUserScore();tick()
+
+connectBtn?.addEventListener('click',async()=>{if(tonConnectUI.account){await tonConnectUI.disconnect()}else{await tonConnectUI.openModal()} })
+tonConnectUI.onStatusChange(refreshBoostStatus)
+
+buyBtns.forEach(btn=>btn.addEventListener('click',async()=>{
+  const acc = tonConnectUI.account;if(!acc){alert('Connect your wallet first');return}
+  const tierKey = btn.dataset.tier;const tier = TIERS[tierKey];if(!tier){alert('Invalid tier');return}
+  try{
+    const res = await fetch(BACKEND_URL+'/api/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wallet:acc.address,tier:tierKey})})
+    const order = await res.json()
+    await tonConnectUI.sendTransaction({validUntil:Math.floor(Date.now()/1000)+600,messages:[{address:RECEIVER_ADDRESS,amount:String(order.totalNanotons)}]})
+    const vres = await fetch(BACKEND_URL+'/api/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wallet:acc.address,expectedAmount:order.totalNanotons,tier:tierKey})})
+    const vdata = await vres.json();if(vdata.activated){alert('✅ Boost activated for 7 days!');await refreshBoostStatus()}else{alert('❗Could not verify payment yet')}
+  }catch(e){console.error(e);alert('Transaction failed')}
+}))
+</script>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TON Spin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: white;
+    }
+    .container {
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    button {
+      border: none;
+      padding: 12px 25px;
+      font-size: 15px;
+      border-radius: 50px;
+      margin: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      color: white;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    #payBtn {
+      background: linear-gradient(45deg, #7c20ce, #5d0ba4);
+    }
+    
+    #payBtn:hover:not(:disabled) {
+      background: linear-gradient(45deg, #7c20ce, #5d0ba4);
+      transform: translateY(-2px);
+    }
+    
+    #spinBtn {
+      background: linear-gradient(45deg, #7c20ce, #5d0ba4);
+    }
+    
+    #spinBtn:hover:not(:disabled) {
+      background: linear-gradient(45deg, #45057d, #31025a);
+      transform: translateY(-2px);
+    }
+  
+    button:disabled {
+      background: linear-gradient(45deg, #666, #888);
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    
+    #connect-root { 
+      margin: 15px 50px;
+    }
+    
+    #spinsLeft, #result, #userScore {
+      font-size: 1.1em;
+      margin: 15px 0;
+      padding: 12px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .loading {
+      display: none;
+      margin: 10px 0;
+      animation: pulse 1.5s infinite;
+      padding: 12px;
+      border-radius: 15px;
+      background: rgba(255, 215, 0, 0.2);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+    
+    .loading.show { 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    .wheel-container {
+      position: relative;
+      margin: 30px auto;
+      width: 320px;
+      height: 320px;
+    }
+
+    #pointer {
+      position: absolute;
+      top: -40px;
+      left: 47%;
+      transform: translateX(-50%);
+      width: 0; 
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-top: 30px solid #ff0000;
+      z-index: 10;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+      animation: pointerGlow 2s infinite;
+    }
+
+    @keyframes pointerGlow {
+      0%, 100% { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+      50% { filter: drop-shadow(0 4px 15px rgba(204, 0, 0, 0.8)); }
+    }
+
+    #wheel {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 
+        0 0 0 8px #7c20ce,
+        0 0 0 12px rgba(249, 249, 249, 0.3),
+        0 8px 30px rgba(0,0,0,0.4);
+      background: conic-gradient(
+        from 0deg,
+        #FF6B6B 0deg 51.43deg,
+        #4ECDC4 51.43deg 102.86deg,
+        #45B7D1 102.86deg 154.29deg,
+        #96CEB4 154.29deg 205.71deg,
+        #FFEAA7 205.71deg 257.14deg,
+        #DDA0DD 257.14deg 308.57deg,
+        #98D8C8 308.57deg 360deg
+      );
+    }
+
+    .sector {
+      width: 50%;
+      height: 50%;
+      position: absolute;
+      top: 50%; 
+      left: 50%;
+      transform-origin: 0% 0%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      border-left: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .sector:nth-child(1) { transform: rotate(0deg) skewY(38.57deg); }
+    .sector:nth-child(2) { transform: rotate(51.43deg) skewY(38.57deg); }
+    .sector:nth-child(3) { transform: rotate(102.86deg) skewY(38.57deg); }
+    .sector:nth-child(4) { transform: rotate(154.29deg) skewY(38.57deg); }
+    .sector:nth-child(5) { transform: rotate(205.71deg) skewY(38.57deg); }
+    .sector:nth-child(6) { transform: rotate(257.14deg) skewY(38.57deg); }
+    .sector:nth-child(7) { transform: rotate(308.57deg) skewY(38.57deg); }
+
+    /* Center circle */
+    #wheel::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #7c20ce, #650eb2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 5;
+    }
+
+    /* Spinning animation */
+    .spinning {
+      animation: sparkle 0.5s infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { box-shadow: 
+        0 0 0 8px #7c20ce,
+        0 0 0 12px rgba(163, 163, 159, 0.3),
+        0 8px 30px rgba(0,0,0,0.4); }
+      50% { box-shadow: 
+        0 0 0 8px #7c20ce,
+        0 0 0 12px rgba(234, 234, 234, 0.8),
+        0 8px 30px rgba(159, 159, 159, 0.3),
+        0 0 50px rgba(255, 255, 255, 0.5); }
+    }
+
+    /* Icon styling with colors */
+    .fa-hourglass-half { color: #FFD700; } /* Gold for loading */
+    .fa-ticket-alt { color: #0fbaee; } /* Teal for spins */
+    .fa-star { color: #7c20ce; } /* Gold for score */
+    .fa-sync-alt { color: white; } /* White for spin button */
+    .fa-check-circle { color: #4CAF50; } /* Green for success */
+    .fa-search-dollar { color: #2196F3; } /* Blue for processing */
+    .fa-exclamation-circle { color: #2196F3; } /* Red for errors */
+    .fa-trophy { color: #FFD700; } /* Gold for winning */
+    .fa-spinner { color: #7c20ce; } /* Purple for spinning */
+    .fa-bullseye { color: white; } /* White for wheel center */
+    .fa-wallet { color: #0088cc; } /* Blue for TON wallet */
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      .wheel-container {
+        width: 280px;
+        height: 280px;
+      }
+      #wheel {
+        width: 260px;
+        height: 260px;
+      }
+      .sector {
+        font-size: 14px;
+      }
+    }
+
+    /* TON icon in button */
+    .ton-icon {
+      width: 20px;
+      height: 20px;
+    }
+    canvas {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+  background: linear-gradient(90deg, #8A2BE2, #191970);
+  background-size: 200% 100%;
+
+  animation: slide 6s ease-in-out infinite alternate;
+}
+@keyframes slide {
+  0%   { background-position: left; }
+  100% { background-position: right; }
+}
+  .back-btn {
+      background: #8225d8;
+      color: #ffffff;
+      border: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+      position: absolute;
+      top: 4%;
+    }
+  </style>
+</head>
+<body>
+
+    <canvas id="starCanvas"></canvas>
+
+  <div class="container">
+    <div id="connect-root"></div>
+        <a href="index.html">
+        <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+      </a>
+    <button id="payBtn" disabled>
+      <img src="https://raw.githubusercontent.com/haykoo707/hypervverse/refs/heads/main/toncoin-ton-logo.png" alt="TON" class="ton-icon">
+      Pay 0.0000001 TON & Get Spin
+    </button>
+    <div class="loading" id="loading">
+      <i class="fas fa-hourglass-half"></i> Processing payment...
+    </div>
+
+    <!-- Enhanced Spin Wheel -->
+    <div class="wheel-container">
+      <div id="pointer"></div>
+      <div id="wheel"></div>
+    </div>
+
+    <button id="spinBtn" disabled>
+      <i class="fas fa-sync-alt"></i> Spin the Wheel!
+    </button>
+    <div id="spinsLeft">
+      <i class="fas fa-ticket-alt"></i> Spins left: 0
+    </div>
+    <div id="userScore">
+      <i class="fas fa-star"></i> UserScore: 0
+    </div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const BACKEND_URL = "https://ton-check.onrender.com";
+    const RECEIVER = "UQBfrU75WGhBLnRpBs1ImWE5sPdxKsFMBgogpD578JxXyDbK";
+    const AMOUNT = 100; // 0.0000001 TON
+
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+      manifestUrl: "https://haykoo707.github.io/test-payment/tonconnect-manifest.json",
+      buttonRootId: "connect-root",
+      uiPreferences: { theme: "SYSTEM" }
+    });
+
+    let spins = 2;
+    let userScore = parseInt(localStorage.getItem("userScore")) || 0;
+    let isSpinning = false;
+
+    const payBtn = document.getElementById("payBtn");
+    const spinBtn = document.getElementById("spinBtn");
+    const resultEl = document.getElementById("result");
+    const spinsEl = document.getElementById("spinsLeft");
+    const loadingEl = document.getElementById("loading");
+    const userScoreEl = document.getElementById("userScore");
+    const wheel = document.getElementById("wheel");
+
+    // Rewards with better distribution
+    const rewards = [500, 1000, 2000, 4000, 5000, 8000, 10000];
+    const weights = [2, 2, 2, 2, 2, 2, 2];
+    let totalWeight = weights.reduce((a,b)=>a+b,0);
+
+    function updateUserScore() {
+      userScoreEl.innerHTML = '<i class="fas fa-star"></i> UserScore: ' + userScore.toLocaleString();
+      localStorage.setItem("userScore", userScore);
+    }
+    updateUserScore();
+
+    function updateSpins() {
+      spinsEl.innerHTML = '<i class="fas fa-ticket-alt"></i> Spins left: ' + spins;
+      spinBtn.disabled = spins <= 0 || isSpinning;
+      payBtn.disabled = !tonConnectUI.account || isSpinning;
+    }
+    updateSpins();
+
+    function showLoading(show = true) {
+      loadingEl.classList.toggle('show', show);
+      payBtn.disabled = show || !tonConnectUI.account;
+    }
+
+    function showResult(message, isSuccess = false) {
+      // Add appropriate icon based on message type
+      let icon = '';
+      if (isSuccess) {
+        icon = '<i class="fas fa-check-circle"></i> ';
+      } else if (message.includes('Processing') || message.includes('Verifying')) {
+        icon = '<i class="fas fa-search-dollar"></i> ';
+      } else if (message.includes('failed')) {
+        icon = '<i class="fas fa-exclamation-circle"></i> ';
+      } else if (message.includes('Congratulations')) {
+        icon = '<i class="fas fa-trophy"></i> ';
+      } else {
+        icon = '<i class="fas fa-spinner"></i> ';
+      }
+      
+      resultEl.innerHTML = icon + message;
+      resultEl.style.background = isSuccess ? 
+        'linear-gradient(45deg, rgba(76, 175, 80, 0.3), rgba(129, 199, 132, 0.3))' : 
+        'linear-gradient(45deg, rgba(244, 67, 54, 0.3), rgba(239, 154, 154, 0.3))';
+      setTimeout(()=>{
+        resultEl.style.background='rgba(255,255,255,0.15)';
+      }, 4000);
+    }
+
+    // Build wheel sectors with better styling
+    function drawWheel() {
+      wheel.innerHTML = ''; // Clear existing content
+      rewards.forEach((reward, i) => {
+        const sector = document.createElement("div");
+        sector.classList.add("sector");
+        sector.innerHTML = `<div style="transform: skewY(-38.57deg) rotate(-25deg);">${reward.toLocaleString()}</div>`;
+        wheel.appendChild(sector);
+      });
+      
+      // Add center icon
+      const centerIcon = document.createElement("i");
+      centerIcon.className = "fas fa-bullseye";
+      centerIcon.style.position = "absolute";
+      centerIcon.style.top = "50%";
+      centerIcon.style.left = "50%";
+      centerIcon.style.transform = "translate(-50%, -50%)";
+      centerIcon.style.color = "white";
+      centerIcon.style.fontSize = "24px";
+      centerIcon.style.zIndex = "6";
+      wheel.appendChild(centerIcon);
+    }
+    drawWheel();
+
+    function weightedRandom() {
+      let rnd = Math.random() * totalWeight;
+      for (let i = 0; i < rewards.length; i++) {
+        if (rnd < weights[i]) return i;
+        rnd -= weights[i];
+      }
+      return 0;
+    }
+
+    // TON wallet handling
+    tonConnectUI.connectionRestored.then(()=>updateSpins());
+    tonConnectUI.onStatusChange(()=>updateSpins());
+
+    payBtn.addEventListener("click", async () => {
+      showLoading(true);
+      showResult("Processing payment...");
+      try {
+        const tx = {
+          validUntil: Math.floor(Date.now()/1000)+600,
+          messages:[{address:RECEIVER, amount:AMOUNT.toString()}]
+        };
+        const sendRes = await tonConnectUI.sendTransaction(tx);
+        if (!sendRes) throw new Error("Transaction cancelled");
+
+        showResult("Verifying payment...");
+        await new Promise(r=>setTimeout(r,3000));
+
+        const response = await fetch(`${BACKEND_URL}/check-payment`, {
+          method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({ txHash: typeof sendRes==="string"?sendRes:null })
+        });
+        const data = await response.json();
+        if (data.success) {
+          spins++;
+          updateSpins();
+          showResult("Payment verified! 1 spin added!", true);
+        } else showResult("Payment verification failed");
+      } catch(err) {
+        showResult("Payment failed: "+err.message);
+      } finally { showLoading(false); }
+    });
+
+    // Enhanced spin logic
+    spinBtn.addEventListener("click", () => {
+      if (spins > 0 && !isSpinning) {
+        isSpinning = true;
+        spins--; 
+        updateSpins();
+        resultEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Spinning...';
+        
+        // Add spinning effects
+        wheel.classList.add('spinning');
+        
+        const sectorCount = rewards.length;
+        const index = weightedRandom();
+        const angleStep = 360 / sectorCount;
+        
+        // More realistic spin with random extra rotations
+        const extraSpins = Math.floor(Math.random() * 3) + 5; // 5-7 full rotations
+        const stopAngle = 360 * extraSpins + (360 - (index * angleStep + angleStep / 2));
+        
+        wheel.style.transform = `rotate(${stopAngle}deg)`;
+        
+        setTimeout(() => {
+          wheel.classList.remove('spinning');
+          const prize = rewards[index];
+          userScore += prize;
+          updateUserScore();
+          showResult(`Congratulations! You won: ${prize.toLocaleString()} XP!`, true);
+          isSpinning = false;
+          updateSpins();
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>
